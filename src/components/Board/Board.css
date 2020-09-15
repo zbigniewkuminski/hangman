@@ -2,9 +2,19 @@
     text-align: center;
 }
 
+.used-letters{
+    display:flex;
+    flex-direction: row;
+    width: 150px;
+}
+
 .main-content{
     display: flex;
     justify-content: center;
+}
+
+.picked-letter{
+    margin-right: 3px;
 }
 
 .keyboard{
