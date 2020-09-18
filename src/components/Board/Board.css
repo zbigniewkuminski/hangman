@@ -30,3 +30,7 @@
 .button:hover{
     cursor: pointer;
 }
+
+.you-tube-hidden{
+    visibility: hidden;
+}

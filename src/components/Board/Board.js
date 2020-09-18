@@ -1,6 +1,6 @@
 import React from 'react';
 import './Board.css';
-
+import YouTube from 'react-youtube';
 let randomWords = require('random-words');
 
 class Board extends React.Component {
@@ -46,6 +46,13 @@ class Board extends React.Component {
   render() {
     this.secretWord = this.secretWord === '' ? randomWords().toUpperCase() : this.secretWord.toUpperCase();
     this.displayedWord = this.displayedWord === '' ? this.secretWord.replace(/./g, '*') : this.displayedWord;
+    const opts = {
+      height: '1',
+      width: '1',
+      playerVars: {
+        autoplay: 1,
+      },
+    };
     return (
       <div>
         <div className="header">
@@ -56,7 +63,7 @@ class Board extends React.Component {
             {this.displayedWord}
           </h1>
         </div>
-
+        <YouTube videoId="ZKAM_Hk4eZ0" opts={opts} onReady={this._onReady} className="you-tube-hidden"/>
         <div className="main-content">
           <div className="game-image">
             <img src={require('./../../assets/hangman' + this.errorCounter + '.png')} alt="test"></img>
@@ -73,14 +80,14 @@ class Board extends React.Component {
           </div>
           <div>
             <div className="header">Used letters <br /></div>
-            <div className="used-letters"> 
+            <div className="used-letters">
               {
                 this.state.usedLetters.map((letter) => {
                   return <div className="picked-letter" key={letter}>{letter}</div>
                 })
               }
             </div>
-            </div>
+          </div>
         </div>
 
         <div className="footer">
