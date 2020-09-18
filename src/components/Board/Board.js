@@ -11,6 +11,7 @@ class Board extends React.Component {
   secretWord = '';
   displayedWord = '';
   errorCounter = 0;
+  videoId='ZKAM_Hk4eZ0';
 
   hiddenLetterReveal(letter) {
     let tempString = '';
@@ -27,12 +28,19 @@ class Board extends React.Component {
         tempString += '*';
       }
     }
-    console.log(foundLetterCounter)
+    if(tempString===this.secretWord){
+      this.errorCounter=8;
+    }
     if (foundLetterCounter === 0) {
       this.errorCounter++;
-      console.log(this.errorCounter)
     }
+    if(this.errorCounter===7){
+      this.displayedWord=this.secretWord;
+      this.videoId='RHYOZaQuqtM';
+    }
+    else{
     this.displayedWord = tempString;
+    }
   }
 
   pickLetter(letter, index) {
@@ -47,8 +55,8 @@ class Board extends React.Component {
     this.secretWord = this.secretWord === '' ? randomWords().toUpperCase() : this.secretWord.toUpperCase();
     this.displayedWord = this.displayedWord === '' ? this.secretWord.replace(/./g, '*') : this.displayedWord;
     const opts = {
-      height: '1',
-      width: '1',
+      height: '0',
+      width: '0',
       playerVars: {
         autoplay: 1,
       },
@@ -63,7 +71,7 @@ class Board extends React.Component {
             {this.displayedWord}
           </h1>
         </div>
-        <YouTube videoId="ZKAM_Hk4eZ0" opts={opts} onReady={this._onReady} className="you-tube-hidden"/>
+        <YouTube videoId={this.videoId} opts={opts} onReady={this._onReady} />
         <div className="main-content">
           <div className="game-image">
             <img src={require('./../../assets/hangman' + this.errorCounter + '.png')} alt="test"></img>
