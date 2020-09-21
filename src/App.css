@@ -2,5 +2,14 @@
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  margin: 5vh;
+}
+
+@font-face{
+  font-family:'retroFont';
+  src: url('./fonts/PressStart2P-Regular.ttf')
+}
+
+body,button{
+  font-family:retroFont;
 }
