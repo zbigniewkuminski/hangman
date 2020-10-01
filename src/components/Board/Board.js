@@ -13,7 +13,7 @@ class Board extends React.Component {
   displayedWord = '';
   errorCounter = 0;
   videoId = 'ZKAM_Hk4eZ0';
-  winVideoId='E-XoZAlEDkY';
+  winVideoId = 'E-XoZAlEDkY';
 
   hiddenLetterReveal(letter) {
     let tempString = '';
@@ -54,6 +54,18 @@ class Board extends React.Component {
     this.setState(tempState);
   }
 
+  gameReset() {
+    const newState = {
+      alphabet: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+      usedLetters: [],
+      welcomescreen: true,
+    }
+    this.errorCounter = 0;
+    this.secretWord = randomWords().toUpperCase();
+    this.displayedWord = this.secretWord.replace(/./g, '*');
+    this.setState(newState);
+  }
+
   render() {
     this.secretWord = this.secretWord === '' ? randomWords().toUpperCase() : this.secretWord.toUpperCase();
     this.displayedWord = this.displayedWord === '' ? this.secretWord.replace(/./g, '*') : this.displayedWord;
@@ -77,29 +89,31 @@ class Board extends React.Component {
           </div>
           <YouTube videoId={this.videoId} opts={opts} onReady={this._onReady} />
           <div className="main-content">
-            <div className="game-image">
-              <img src={require('./../../assets/hangman' + this.errorCounter + '.png')} alt="test"></img>
-            </div>
-            <div className="keyboard">
-              <div className="header">
-                Pick letter <br /> </div>
-
-              {
-                this.state.alphabet.map((letter, index) => {
-                  return <button className="button" disabled={this.errorCounter >= 7} key={letter} onClick={() => { this.pickLetter(letter, index) }}>{letter}</button>
-                })
-              }
-            </div>
-            <div>
-              <div className="header">Used letters <br /></div>
-              <div className="used-letters">
+            <div className="game-content">
+              <div className="game-image">
+                <img src={require('./../../assets/hangman' + this.errorCounter + '.png')} alt="test"></img>
+              </div>
+              <div className="keyboard">
+                <div className="header">
+                  Pick letter <br /> </div>
                 {
-                  this.state.usedLetters.map((letter) => {
-                    return <div className="picked-letter" key={letter}>{letter}</div>
+                  this.state.alphabet.map((letter, index) => {
+                    return <button className="keyboard-button" disabled={this.errorCounter >= 7} key={letter} onClick={() => { this.pickLetter(letter, index) }}>{letter}</button>
                   })
                 }
               </div>
+              <div>
+                <div className="header">Used letters <br /></div>
+                <div className="used-letters">
+                  {
+                    this.state.usedLetters.map((letter) => {
+                      return <div className="picked-letter" key={letter}>{letter}</div>
+                    })
+                  }
+                </div>
+              </div>
             </div>
+            <button className="button-start-reset" onClick={() => { this.gameReset() }}>Reset</button>
           </div>
 
           <div className="footer">
@@ -110,8 +124,8 @@ class Board extends React.Component {
     } else {
       return (<div className='welcome-screen'>
         <div>Enter the Hangman 2077</div>
-        <img src={require('./../../assets/hangmangif.gif')} className="hangman-gif"></img>
-        <button className="button-start"  onClick={() => { this.setState({welcomescreen: true,}) }}>Start</button>
+        <img src={require('./../../assets/hangmangif.gif')} className="hangman-gif" alt="test"></img>
+        <button className="button-start-reset" onClick={() => { this.setState({ welcomescreen: true, }) }}>Start</button>
       </div>
       )
 
