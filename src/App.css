@@ -2,7 +2,9 @@
   height: 100vh;
   display: flex;
   justify-content: center;
-  margin: 5vh;
+  background-image: url("./assets/background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 @font-face{

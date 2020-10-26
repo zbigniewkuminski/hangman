@@ -8,11 +8,12 @@ class Board extends React.Component {
     alphabet: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
     usedLetters: [],
     welcomescreen: false,
+    enterAnimation : false
   }
   secretWord = '';
   displayedWord = '';
   errorCounter = 0;
-  videoId = 'ZKAM_Hk4eZ0';
+  // videoId = 'ZKAM_Hk4eZ0';
   winVideoId = 'E-XoZAlEDkY';
 
   hiddenLetterReveal(letter) {
@@ -78,7 +79,7 @@ class Board extends React.Component {
     };
     if (this.state.welcomescreen) {
       return (
-        <div>
+        <div className="whole-game-modal">
           <div className="header">
             <h3> Your goal is to save the poor man from being hanged. You can achieve this by guessing all hidden letters.
             Pick letters from board below but be aware that every mistake You make, gets this Guy closer to dead. Good luck.
@@ -86,13 +87,13 @@ class Board extends React.Component {
             <h1>
               {this.displayedWord}
             </h1>
+            <div className="game-image">
+              <img src={require('./../../assets/hangman' + this.errorCounter + '.png')} alt="test"></img>
+            </div>
           </div>
           <YouTube videoId={this.videoId} opts={opts} onReady={this._onReady} />
           <div className="main-content">
             <div className="game-content">
-              <div className="game-image">
-                <img src={require('./../../assets/hangman' + this.errorCounter + '.png')} alt="test"></img>
-              </div>
               <div className="keyboard">
                 <div className="header">
                   Pick letter <br /> </div>
@@ -123,12 +124,12 @@ class Board extends React.Component {
       )
     } else {
       return (<div className='welcome-screen'>
-        <div>Enter the Hangman 2077</div>
+        <div className="tittle enter-game-animation-top">Enter the Hangman 2077</div>
         <img src={require('./../../assets/hangmangif.gif')} className="hangman-gif" alt="test"></img>
-        <button className="button-start-reset" onClick={() => { this.setState({ welcomescreen: true, }) }}>Start</button>
+        <button className={"button-start-reset "+ (this.state.enterAnimation ? "enter-game-animation-bottom " : "button-start-reset-animation ")} 
+        onClick={() => {this.setState({enterAnimation: true}); console.log('teścikźćż');setTimeout(()=>{this.setState({ welcomescreen: true})}, 1000); }}>Start</button>
       </div>
       )
-
     }
   }
 }
