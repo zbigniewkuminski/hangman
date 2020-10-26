@@ -79,7 +79,7 @@ class Board extends React.Component {
     };
     if (this.state.welcomescreen) {
       return (
-        <div className="whole-game-modal">
+        <div className="whole-game-modal open-animation">
           <div className="header">
             <h3> Your goal is to save the poor man from being hanged. You can achieve this by guessing all hidden letters.
             Pick letters from board below but be aware that every mistake You make, gets this Guy closer to dead. Good luck.
@@ -123,10 +123,10 @@ class Board extends React.Component {
         </div>
       )
     } else {
-      return (<div className='welcome-screen'>
+      return (<div className={'welcome-screen ' + (this.state.enterAnimation ? "enter-game-animation " : "open-animation ")}>
         <div className="tittle enter-game-animation-top">Enter the Hangman 2077</div>
         <img src={require('./../../assets/hangmangif.gif')} className="hangman-gif" alt="test"></img>
-        <button className={"button-start-reset "+ (this.state.enterAnimation ? "enter-game-animation-bottom " : "button-start-reset-animation ")} 
+        <button className="button-start-reset "
         onClick={() => {this.setState({enterAnimation: true}); console.log('teścikźćż');setTimeout(()=>{this.setState({ welcomescreen: true})}, 1000); }}>Start</button>
       </div>
       )

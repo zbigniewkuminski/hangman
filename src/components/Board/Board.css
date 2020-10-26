@@ -1,8 +1,8 @@
 .whole-game-modal {
     margin-left: 400px;
     margin-right: 400px;
-    background-color: #ffffff;
-    background: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(255, 255, 255, 1) 13%, rgba(255, 255, 255, 1) 87%, rgba(0, 0, 0, 1) 100%);
+    background-color: #000000;
+    color: #ffffff
 }
 
 .tittle {
@@ -97,13 +97,13 @@
     bottom: 10px;
 }
 
-.button-start-reset-animation {
-    animation: appear-animation 1.5s;
+.open-animation {
+    animation: appear-animation 5.0s;
     transition: all .3s ease-in-out;
     animation-fill-mode: both;
 }
 
-.enter-game-animation-bottom {
+.enter-game-animation {
     animation: animation-go-bootom 1.0s;
     transition: all .3s ease-in-out;
     animation-fill-mode: forwards;
