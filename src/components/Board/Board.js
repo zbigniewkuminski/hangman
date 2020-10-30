@@ -13,7 +13,7 @@ class Board extends React.Component {
   secretWord = '';
   displayedWord = '';
   errorCounter = 0;
-  // videoId = 'ZKAM_Hk4eZ0';
+  videoId = 'FBjYUCRDaGY';
   winVideoId = 'E-XoZAlEDkY';
 
   hiddenLetterReveal(letter) {
@@ -56,6 +56,7 @@ class Board extends React.Component {
   }
 
   gameReset() {
+    this.videoId = 'FBjYUCRDaGY';
     const newState = {
       alphabet: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
       usedLetters: [],
@@ -71,8 +72,8 @@ class Board extends React.Component {
     this.secretWord = this.secretWord === '' ? randomWords().toUpperCase() : this.secretWord.toUpperCase();
     this.displayedWord = this.displayedWord === '' ? this.secretWord.replace(/./g, '*') : this.displayedWord;
     const opts = {
-      height: '0',
-      width: '0',
+      height: '1',
+      width: '1',
       playerVars: {
         autoplay: 1,
       },
