@@ -5,6 +5,10 @@
     color: #ffffff
 }
 
+.game-state {
+    height: 550px;
+}
+
 .tittle {
     text-align: center;
     padding: 60px;
@@ -59,7 +63,6 @@
 
 .hangman-gif {
     height: 650px;
-    width: 550px;
     animation: appear-animation 1.5s;
     transition: all .3s ease-in-out;
 }
@@ -94,7 +97,7 @@
     border-radius: 10px;
     cursor: pointer;
     position: absolute;
-    bottom: 10px;
+    bottom: 40px;
 }
 
 .open-animation {

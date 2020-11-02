@@ -32,13 +32,13 @@ class Board extends React.Component {
       }
     }
     if (tempString === this.secretWord) {
-      this.errorCounter = 8;
+      this.errorCounter = 10;
       this.videoId = this.winVideoId;
     }
     if (foundLetterCounter === 0) {
       this.errorCounter++;
     }
-    if (this.errorCounter === 7) {
+    if (this.errorCounter === 9) {
       this.displayedWord = this.secretWord;
       this.videoId = 'RHYOZaQuqtM';
     }
@@ -88,8 +88,8 @@ class Board extends React.Component {
             <h1>
               {this.displayedWord}
             </h1>
-            <div className="game-image">
-              <img src={require('./../../assets/hangman' + this.errorCounter + '.png')} alt="test"></img>
+            <div>
+              <img className="game-state" src={require('./../../assets/hangman' + this.errorCounter + '.png')} alt="test"></img>
             </div>
           </div>
           <YouTube videoId={this.videoId} opts={opts} onReady={this._onReady} />
@@ -100,7 +100,7 @@ class Board extends React.Component {
                   Pick letter <br /> </div>
                 {
                   this.state.alphabet.map((letter, index) => {
-                    return <button className="keyboard-button" disabled={this.errorCounter >= 7} key={letter} onClick={() => { this.pickLetter(letter, index) }}>{letter}</button>
+                    return <button className="keyboard-button" disabled={this.errorCounter >= 9} key={letter} onClick={() => { this.pickLetter(letter, index) }}>{letter}</button>
                   })
                 }
               </div>
@@ -126,7 +126,7 @@ class Board extends React.Component {
     } else {
       return (<div className={'welcome-screen ' + (this.state.enterAnimation ? "enter-game-animation " : "open-animation ")}>
         <div className="tittle enter-game-animation-top">Enter the Hangman 2077</div>
-        <img src={require('./../../assets/hangmangif.gif')} className="hangman-gif" alt="test"></img>
+        <img src={require('./../../assets/hangman_home_page.gif')} className="hangman-gif" alt="test"></img>
         <button className="button-start-reset "
         onClick={() => {this.setState({enterAnimation: true}); console.log('teścikźćż');setTimeout(()=>{this.setState({ welcomescreen: true})}, 1000); }}>Start</button>
       </div>
