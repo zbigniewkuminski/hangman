@@ -1,6 +1,7 @@
 import React from 'react';
 import './Board.css';
 import YouTube from 'react-youtube';
+import AddPlayerToScoreboard from '../AddPlayerToScoreboard/AddPlayerToScoreboard';
 let randomWords = require('random-words');
 
 class Board extends React.Component {
@@ -8,10 +9,12 @@ class Board extends React.Component {
     alphabet: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
     usedLetters: [],
     welcomescreen: false,
-    enterAnimation : false
+    enterAnimation: false,
+    showModal: false
   }
   secretWord = '';
   displayedWord = '';
+  score = 0;
   errorCounter = 0;
   videoId = 'FBjYUCRDaGY';
   winVideoId = 'E-XoZAlEDkY';
@@ -31,14 +34,16 @@ class Board extends React.Component {
         tempString += '*';
       }
     }
-    if (tempString === this.secretWord) {
+    this.score += foundLetterCounter;
+    if (tempString === this.secretWord) { // WIN- SECRET WORD KNOWN
+      this.score = this.score + this.secretWord.length * 2;
       this.errorCounter = 10;
       this.videoId = this.winVideoId;
     }
-    if (foundLetterCounter === 0) {
+    if (foundLetterCounter === 0) { // MISTAKE 
       this.errorCounter++;
     }
-    if (this.errorCounter === 9) {
+    if (this.errorCounter === 9) { // LOST GAME
       this.displayedWord = this.secretWord;
       this.videoId = 'RHYOZaQuqtM';
     }
@@ -66,6 +71,12 @@ class Board extends React.Component {
     this.secretWord = randomWords().toUpperCase();
     this.displayedWord = this.secretWord.replace(/./g, '*');
     this.setState(newState);
+  }
+
+  toggleModal() {
+    console.log('taseaseasd')
+    this.setState({showModal: !this.state.showModal});
+    console.log(this.state)
   }
 
   render() {
@@ -104,19 +115,30 @@ class Board extends React.Component {
                   })
                 }
               </div>
-              <div>
-                <div className="header">Used letters <br /></div>
-                <div className="used-letters">
-                  {
-                    this.state.usedLetters.map((letter) => {
-                      return <div className="picked-letter" key={letter}>{letter}</div>
-                    })
-                  }
+              <div className="used-letter-and-score-section">
+                <div>
+                  <div className="header">Used letters <br /></div>
+                  <div className="used-letters">
+                    {
+                      this.state.usedLetters.map((letter) => {
+                        return <div className="picked-letter" key={letter}>{letter}</div>
+                      })
+                    }
+                  </div>
+                </div>
+                <div>
+                  <div className="header">Score: {this.score}<br /></div>
                 </div>
               </div>
             </div>
             <button className="button-start-reset" onClick={() => { this.gameReset() }}>Reset</button>
+            <button className="button-start-reset" onClick={() => { this.toggleModal() }}>TOGGLE</button>
           </div>
+          {
+            this.state.showModal ? (
+              <AddPlayerToScoreboard className="add-player-to-scoreboard"/>) :
+              (<div style={{color: 'red'}}>TEST </div>)
+          }
 
           <div className="footer">
 
@@ -128,7 +150,7 @@ class Board extends React.Component {
         <div className="tittle enter-game-animation-top">Enter the Hangman 2077</div>
         <img src={require('./../../assets/hangman_home_page.gif')} className="hangman-gif" alt="test"></img>
         <button className="button-start-reset "
-        onClick={() => {this.setState({enterAnimation: true}); console.log('teścikźćż');setTimeout(()=>{this.setState({ welcomescreen: true})}, 1000); }}>Start</button>
+          onClick={() => { this.setState({ enterAnimation: true }); setTimeout(() => { this.setState({ welcomescreen: true }) }, 1000); }}>Start</button>
       </div>
       )
     }
