@@ -96,7 +96,7 @@ class Board extends React.Component {
             <h3> Your goal is to save the poor man from being hanged. You can achieve this by guessing all hidden letters.
             Pick letters from board below but be aware that every mistake You make, gets this Guy closer to dead. Good luck.
           </h3>
-            <h1>
+            <h1 className="displayed-word">
               {this.displayedWord}
             </h1>
             <div>
@@ -132,12 +132,10 @@ class Board extends React.Component {
               </div>
             </div>
             <button className="button-start-reset" onClick={() => { this.gameReset() }}>Reset</button>
-            <button className="button-start-reset" onClick={() => { this.toggleModal() }}>TOGGLE</button>
+            {/* <button className="button-start-reset" onClick={() => { this.toggleModal() }}>TOGGLE</button> */}
           </div>
           {
-            this.state.showModal ? (
-              <AddPlayerToScoreboard className="add-player-to-scoreboard"/>) :
-              (<div style={{color: 'red'}}>TEST </div>)
+            this.state.showModal ? (<AddPlayerToScoreboard className="add-player-to-scoreboard"/>) : (<div></div>)
           }
 
           <div className="footer">

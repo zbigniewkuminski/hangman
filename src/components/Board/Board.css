@@ -6,7 +6,7 @@
 }
 
 .game-state {
-    height: 550px;
+    height: 400px;
 }
 
 .tittle {
@@ -122,12 +122,13 @@
     background-color: lightyellow;
 }
 
-h1 {
+.displayed-word {
     margin-top: 50px;
     font-size: 40px;
 }
 
 .add-player-to-scoreboard {
+    text-align: center;
     width: 400px;
     height: 300px;
     background-color: grey;
