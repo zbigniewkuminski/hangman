@@ -1,12 +1,12 @@
 .whole-game-modal {
-    margin-left: 400px;
-    margin-right: 400px;
+    margin-left: 450px;
+    margin-right: 450px;
     background-color: #000000;
     color: #ffffff
 }
 
 .game-state {
-    height: 400px;
+    height: 350px;
 }
 
 .tittle {
@@ -34,6 +34,7 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    margin-top: 10px;
 }
 
 .game-content {
@@ -41,6 +42,14 @@
     justify-content: space-evenly;
     flex-direction: row;
     width: 100%;
+}
+
+.button-section{
+    position: absolute;
+    bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    width: 20%;
 }
 
 .used-letter-and-score-section{
@@ -59,8 +68,8 @@
 }
 
 .keyboard-button {
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     margin: 3px;
 }
 
@@ -103,8 +112,6 @@
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    position: absolute;
-    bottom: 40px;
 }
 
 .open-animation {
@@ -123,7 +130,7 @@
 }
 
 .displayed-word {
-    margin-top: 50px;
+    margin-top: 30px;
     font-size: 40px;
 }
 

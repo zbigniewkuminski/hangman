@@ -16,6 +16,7 @@ class Board extends React.Component {
   displayedWord = '';
   score = 0;
   errorCounter = 0;
+  puzzleDiscovered = false;
   videoId = 'FBjYUCRDaGY';
   winVideoId = 'E-XoZAlEDkY';
 
@@ -39,13 +40,16 @@ class Board extends React.Component {
       this.score = this.score + this.secretWord.length * 2;
       this.errorCounter = 10;
       this.videoId = this.winVideoId;
+      this.puzzleDiscovered = true;
     }
     if (foundLetterCounter === 0) { // MISTAKE 
       this.errorCounter++;
     }
     if (this.errorCounter === 9) { // LOST GAME
+      this.puzzleDiscovered = false;
       this.displayedWord = this.secretWord;
       this.videoId = 'RHYOZaQuqtM';
+      this.scoreboardDisplay();
     }
     else {
       this.displayedWord = tempString;
@@ -60,7 +64,7 @@ class Board extends React.Component {
     this.setState(tempState);
   }
 
-  gameReset() {
+  gameReset(puzzleSolved) {
     this.videoId = 'FBjYUCRDaGY';
     const newState = {
       alphabet: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
@@ -70,21 +74,25 @@ class Board extends React.Component {
     this.errorCounter = 0;
     this.secretWord = randomWords().toUpperCase();
     this.displayedWord = this.secretWord.replace(/./g, '*');
+    if (!puzzleSolved) {
+      this.score = 0;
+    }
+    this.puzzleDiscovered = false;
     this.setState(newState);
   }
 
-  toggleModal() {
-    console.log('taseaseasd')
-    this.setState({showModal: !this.state.showModal});
-    console.log(this.state)
+  scoreboardDisplay = () => {
+    var tempState = this.state;
+    tempState.showModal = !this.state.showModal;
+    this.setState(tempState);
   }
 
   render() {
     this.secretWord = this.secretWord === '' ? randomWords().toUpperCase() : this.secretWord.toUpperCase();
     this.displayedWord = this.displayedWord === '' ? this.secretWord.replace(/./g, '*') : this.displayedWord;
     const opts = {
-      height: '1',
-      width: '1',
+      height: '0',
+      width: '0',
       playerVars: {
         autoplay: 1,
       },
@@ -103,7 +111,6 @@ class Board extends React.Component {
               <img className="game-state" src={require('./../../assets/hangman' + this.errorCounter + '.png')} alt="test"></img>
             </div>
           </div>
-          <YouTube videoId={this.videoId} opts={opts} onReady={this._onReady} />
           <div className="main-content">
             <div className="game-content">
               <div className="keyboard">
@@ -131,15 +138,21 @@ class Board extends React.Component {
                 </div>
               </div>
             </div>
-            <button className="button-start-reset" onClick={() => { this.gameReset() }}>Reset</button>
-            {/* <button className="button-start-reset" onClick={() => { this.toggleModal() }}>TOGGLE</button> */}
+            <div className="button-section">
+              <button className="button-start-reset" onClick={() => {
+                this.gameReset(this.puzzleDiscovered ? true : false)
+              }
+              }>{this.puzzleDiscovered ? 'Random new word' : 'Reset'}</button>
+              <button className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>Scoreboard</button>
+            </div>
           </div>
+          <YouTube videoId={this.videoId} opts={opts} onReady={this._onReady} />
           {
-            this.state.showModal ? (<AddPlayerToScoreboard className="add-player-to-scoreboard"/>) : (<div></div>)
+            this.state.showModal ? (<AddPlayerToScoreboard className="add-player-to-scoreboard"
+              scoreboardDisplay={this.scoreboardDisplay} 
+              playerScore={this.score}/>) : (<div></div>)
           }
-
           <div className="footer">
-
           </div>
         </div>
       )

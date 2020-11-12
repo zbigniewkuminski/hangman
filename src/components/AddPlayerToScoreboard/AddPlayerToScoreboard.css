@@ -18,5 +18,15 @@
     border-radius: 38px;
 }
 
+.score-layout {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 25px;
+}
+
+.button{
+    cursor: pointer;
+}
+
 
 
