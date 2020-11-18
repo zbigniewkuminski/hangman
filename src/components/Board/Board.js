@@ -150,7 +150,10 @@ class Board extends React.Component {
           {
             this.state.showModal ? (<AddPlayerToScoreboard className="add-player-to-scoreboard"
               scoreboardDisplay={this.scoreboardDisplay} 
-              playerScore={this.score}/>) : (<div></div>)
+              gameReset={this.gameReset}
+              puzzleDiscovered={this.puzzleDiscovered ? true : false}
+              playerScore={this.score}
+              showNameInput={this.errorCounter === 9 ? true : false}/>) : (<div></div>)
           }
           <div className="footer">
           </div>

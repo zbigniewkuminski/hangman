@@ -2,48 +2,72 @@ import React from "react";
 import "./AddPlayerToScoreboard.css";
 
 class AddPlayerToScoreboard extends React.Component {
-  unsortedArray = [
-    {
-      name: "Daniel",
-      score: 2000,
-    },
-    {
-      name: "Zbyszek",
-      score: 200,
-    },
-    {
-      name: "Zenek",
-      score: 20,
-    },
-  ];
+  // unsortedArray = [
+  //   {
+  //     name: "Daniel",
+  //     score: 2000,
+  //   },
+  //   {
+  //     name: "Zbyszek",
+  //     score: 1500,
+  //   },
+  //   {
+  //     name: "Zenek",
+  //     score: 20,
+  //   },
+  //   {
+  //     name: "Mareczek",
+  //     score: 10,
+  //   }
+  // ];
 
-  newPlayer = { name: "Zbygniew", score: 1000 };
+  // newPlayer = { name: "Zbygniew", score: 15 };
 
   state = {
-    // topScores : JSON.parse(localStorage.getItem('topScores'))
-    topScores: this.insertNewScore(this.unsortedArray, this.newPlayer),
+    topScores: this.getScoresFromLocalStorage()
   };
+
+  getScoresFromLocalStorage() {
+    // localStorage.setItem('topScores', JSON.stringify(this.unsortedArray));
+    return JSON.parse(localStorage.getItem('topScores')) ? JSON.parse(localStorage.getItem('topScores')) : [];
+  }
 
   closeScoreboard() {
     this.props.scoreboardDisplay();
   }
 
+  prepareToSave(){
+    var newScore = {
+      name: 'asdasd',
+      score: this.props.playerScore
+    }
+    localStorage.setItem('topScores', JSON.stringify(this.insertNewScore(this.state.topScores, newScore)));
+    this.setState({topScores: this.getScoresFromLocalStorage()});
+    this.props.gameReset(this.props.puzzleDiscovered);
+  }
+
   insertNewScore(unsortedScores, newScore) {
     var sortedScores = [];
+    if (!unsortedScores.length) {
+      sortedScores.push(newScore);
+      return sortedScores;
+    }
+    if (newScore.score > unsortedScores[0].score) {
+      unsortedScores.unshift(newScore);
+      return unsortedScores;
+    } else if (newScore.score <= unsortedScores[unsortedScores.length - 1].score) {
+      unsortedScores.push(newScore)
+      return unsortedScores;
+    }
     for (var i = 0; i < unsortedScores.length - 1; i++) {
-      console.log(unsortedScores[i]);
-      console.log(newScore);
-      console.log(unsortedScores[i+1])
-
-      if (unsortedScores[i].score > newScore.score && unsortedScores[i+1].score <= newScore.score) {
-        console.log('test1')
-          // sortedScores = unsortedScores.slice(0, i)
-          // .push(newScore)
-          // .concat(unsortedScores.slice(i, unsortedScores.length));
+      if (unsortedScores[i].score > newScore.score && unsortedScores[i + 2].score <= newScore.score) {
+        sortedScores = unsortedScores.slice(0, i + 2);
+        sortedScores.push(newScore);
+        sortedScores = sortedScores.concat(unsortedScores.slice(i + 2, unsortedScores.length));
         break;
       }
     }
-    return sortedScores;
+    return sortedScores.slice(0, 10);
   }
 
   render() {
@@ -92,8 +116,19 @@ class AddPlayerToScoreboard extends React.Component {
               })}
             </div>
           </div>
-          <input placeholder="Type your name" />
-          <div>{this.props.playerScore}</div>
+          {(() => {
+            if (this.props.showNameInput) {
+              return (
+                <div className="add-score-section">
+                  <div className="input-section">
+                    <input className="name-input" placeholder="Enter name" />
+                    <div className="score">{this.props.playerScore}</div>
+                  </div>
+                  <button className="button-save" onClick={() => { this.prepareToSave() }}>SAVE</button>
+                </div>
+              )
+            }
+          })()}
         </div>
       </div>
     );
