@@ -24,8 +24,14 @@ class AddPlayerToScoreboard extends React.Component {
   // newPlayer = { name: "Zbygniew", score: 15 };
 
   state = {
-    topScores: this.getScoresFromLocalStorage()
+    topScores: this.getScoresFromLocalStorage(),
+    newPlayerName: ''
   };
+
+
+  handleNewPlayerName = (event) => {
+    this.setState({newPlayerName: event.target.value})
+  }
 
   getScoresFromLocalStorage() {
     // localStorage.setItem('topScores', JSON.stringify(this.unsortedArray));
@@ -38,7 +44,7 @@ class AddPlayerToScoreboard extends React.Component {
 
   prepareToSave(){
     var newScore = {
-      name: 'asdasd',
+      name: this.state.newPlayerName,
       score: this.props.playerScore
     }
     localStorage.setItem('topScores', JSON.stringify(this.insertNewScore(this.state.topScores, newScore)));
@@ -60,7 +66,7 @@ class AddPlayerToScoreboard extends React.Component {
       return unsortedScores;
     }
     for (var i = 0; i < unsortedScores.length - 1; i++) {
-      if (unsortedScores[i].score > newScore.score && unsortedScores[i + 2].score <= newScore.score) {
+      if (unsortedScores[i].score >= newScore.score && unsortedScores[i + 2].score < newScore.score) {
         sortedScores = unsortedScores.slice(0, i + 2);
         sortedScores.push(newScore);
         sortedScores = sortedScores.concat(unsortedScores.slice(i + 2, unsortedScores.length));
@@ -68,6 +74,10 @@ class AddPlayerToScoreboard extends React.Component {
       }
     }
     return sortedScores.slice(0, 10);
+  }
+
+  checkIsNewScoreInTop10(){
+    return this.state.topScores[9].score < this.props.playerScore ? true : false;
   }
 
   render() {
@@ -117,16 +127,19 @@ class AddPlayerToScoreboard extends React.Component {
             </div>
           </div>
           {(() => {
-            if (this.props.showNameInput) {
+            if (this.props.showNameInput && this.checkIsNewScoreInTop10()) {
               return (
                 <div className="add-score-section">
                   <div className="input-section">
-                    <input className="name-input" placeholder="Enter name" />
+                    <input className="name-input" value={this.state.newPlayerName} type='text' onChange={this.handleNewPlayerName} placeholder="Enter name" />
                     <div className="score">{this.props.playerScore}</div>
                   </div>
-                  <button className="button-save" onClick={() => { this.prepareToSave() }}>SAVE</button>
+                  <button className="button-save" disabled={!this.state.newPlayerName} onClick={() => { this.prepareToSave() }}>SAVE</button>
                 </div>
               )
+            }
+            if(this.props.showNameInput && !this.checkIsNewScoreInTop10()){
+              return('You are weak and you do not deserve for a place in scoreboard.')
             }
           })()}
         </div>
