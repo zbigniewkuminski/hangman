@@ -113,7 +113,7 @@ class AddPlayerToScoreboard extends React.Component {
                     <input className="name-input" value={this.state.newPlayerName} maxLength='20' type='text' onChange={this.handleNewPlayerName} placeholder="Enter name" />
                     <div className="score">Scored {this.props.playerScore} PTS</div>
                   </div>
-                  <button className="button-save" disabled={!this.state.newPlayerName} onClick={() => { this.prepareToSave() }}>SAVE</button>
+                  <button className="button-save" disabled={!this.state.newPlayerName.trim()} onClick={() => { this.prepareToSave() }}>SAVE</button>
                 </div>
               )
             }
