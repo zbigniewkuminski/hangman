@@ -2,27 +2,6 @@ import React from "react";
 import "./AddPlayerToScoreboard.css";
 
 class AddPlayerToScoreboard extends React.Component {
-  // unsortedArray = [
-  //   {
-  //     name: "Daniel",
-  //     score: 2000,
-  //   },
-  //   {
-  //     name: "Zbyszek",
-  //     score: 1500,
-  //   },
-  //   {
-  //     name: "Zenek",
-  //     score: 20,
-  //   },
-  //   {
-  //     name: "Mareczek",
-  //     score: 10,
-  //   }
-  // ];
-
-  // newPlayer = { name: "Zbygniew", score: 15 };
-
   state = {
     topScores: this.getScoresFromLocalStorage(),
     newPlayerName: ''
@@ -34,7 +13,6 @@ class AddPlayerToScoreboard extends React.Component {
   }
 
   getScoresFromLocalStorage() {
-    // localStorage.setItem('topScores', JSON.stringify(this.unsortedArray));
     return JSON.parse(localStorage.getItem('topScores')) ? JSON.parse(localStorage.getItem('topScores')) : [];
   }
 
@@ -66,10 +44,11 @@ class AddPlayerToScoreboard extends React.Component {
       return unsortedScores;
     }
     for (var i = 0; i < unsortedScores.length - 1; i++) {
-      if (unsortedScores[i].score >= newScore.score && unsortedScores[i + 2].score < newScore.score) {
-        sortedScores = unsortedScores.slice(0, i + 2);
+      if (unsortedScores[i] && unsortedScores[i].score >=newScore.score &&
+         unsortedScores[i + 1].score < newScore.score) {
+        sortedScores = unsortedScores.slice(0, i + 1);
         sortedScores.push(newScore);
-        sortedScores = sortedScores.concat(unsortedScores.slice(i + 2, unsortedScores.length));
+        sortedScores = sortedScores.concat(unsortedScores.slice(i + 1, unsortedScores.length));
         break;
       }
     }
@@ -77,7 +56,7 @@ class AddPlayerToScoreboard extends React.Component {
   }
 
   checkIsNewScoreInTop10(){
-    return this.state.topScores[9].score < this.props.playerScore ? true : false;
+    return this.state.topScores.length < 10 || this.state.topScores[9].score < this.props.playerScore ? true : false;
   }
 
   render() {
@@ -131,8 +110,8 @@ class AddPlayerToScoreboard extends React.Component {
               return (
                 <div className="add-score-section">
                   <div className="input-section">
-                    <input className="name-input" value={this.state.newPlayerName} type='text' onChange={this.handleNewPlayerName} placeholder="Enter name" />
-                    <div className="score">{this.props.playerScore}</div>
+                    <input className="name-input" value={this.state.newPlayerName} maxLength='20' type='text' onChange={this.handleNewPlayerName} placeholder="Enter name" />
+                    <div className="score">Scored {this.props.playerScore} PTS</div>
                   </div>
                   <button className="button-save" disabled={!this.state.newPlayerName} onClick={() => { this.prepareToSave() }}>SAVE</button>
                 </div>
