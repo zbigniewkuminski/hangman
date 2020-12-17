@@ -3,7 +3,7 @@ import "./AddPlayerToScoreboard.css";
 
 class AddPlayerToScoreboard extends React.Component {
   state = {
-    topScores: this.getScoresFromLocalStorage(),
+    topScores: [],
     newPlayerName: ''
   };
 
@@ -12,21 +12,29 @@ class AddPlayerToScoreboard extends React.Component {
     this.setState({newPlayerName: event.target.value})
   }
 
-  getScoresFromLocalStorage() {
-    return JSON.parse(localStorage.getItem('topScores')) ? JSON.parse(localStorage.getItem('topScores')) : [];
+  componentDidMount(){
+    this.getScoresFromLocalStorage();
+  }
+
+  async getScoresFromLocalStorage() {
+    const response = await fetch('https://hangman2077-55a3b-default-rtdb.europe-west1.firebasedatabase.app/.json');
+    const data = await response.json();
+    this.setState({topScores: data? data : []});
   }
 
   closeScoreboard() {
     this.props.scoreboardDisplay();
   }
 
-  prepareToSave(){
+  async prepareToSave(){
     var newScore = {
       name: this.state.newPlayerName,
       score: this.props.playerScore
     }
-    localStorage.setItem('topScores', JSON.stringify(this.insertNewScore(this.state.topScores, newScore)));
-    this.setState({topScores: this.getScoresFromLocalStorage()});
+    let updatedScoreboard = this.insertNewScore(this.state.topScores, newScore);
+    let requestOption = {method: 'PUT', body:JSON.stringify(updatedScoreboard), headers: { 'Content-Type': 'text/plain' },};
+    await fetch('https://hangman2077-55a3b-default-rtdb.europe-west1.firebasedatabase.app/.json', requestOption);
+    this.setState({topScores: updatedScoreboard});
     this.props.gameReset(this.props.puzzleDiscovered);
   }
 
