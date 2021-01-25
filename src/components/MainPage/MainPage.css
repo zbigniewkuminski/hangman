@@ -1,0 +1,55 @@
+.title {
+    text-align: center;
+    padding: 60px;
+    color: white;
+    animation: appear-animation 1.5s;
+    transition: all .3s ease-in-out;
+    animation-fill-mode: both;
+}
+
+.hangman-gif {
+    height: 650px;
+    animation: appear-animation 1.5s;
+    transition: all .3s ease-in-out;
+}
+
+.welcome-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 40px;
+}
+
+@keyframes appear-animation {
+    from {opacity: 0}
+    to {opacity: 1}
+}
+
+.button-start-reset {
+    width: 150px;
+    height: 50px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.open-animation {
+    animation: appear-animation 5.0s;
+    transition: all .3s ease-in-out;
+    animation-fill-mode: both;
+}
+
+ @keyframes animation-go-bootom {
+    from {opacity: 1}
+    to {opacity: 0}
+}
+
+.enter-game-animation {
+    animation: animation-go-bootom 1.0s;
+    transition: all .3s ease-in-out;
+    animation-fill-mode: forwards;
+ }
+
+.button-start-reset:hover {
+    background-color: lightyellow;
+}

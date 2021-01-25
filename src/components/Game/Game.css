@@ -9,7 +9,7 @@
     height: 350px;
 }
 
-.tittle {
+.title {
     text-align: center;
     padding: 60px;
     color: white;
@@ -73,36 +73,13 @@
     margin: 3px;
 }
 
-.button:hover {
+button:hover {
     cursor: pointer;
-}
-
-.hangman-gif {
-    height: 650px;
-    animation: appear-animation 1.5s;
-    transition: all .3s ease-in-out;
-}
-
-.welcome-screen {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 40px;
 }
 
 @keyframes appear-animation {
     from {opacity: 0}
     to {opacity: 1}
-}
-
-@keyframes enter-game-animation-top {
-    from {}
-    to {margin-top: -1500px}
-}
-
-@keyframes animation-go-bootom {
-    from {opacity: 1}
-    to {opacity: 0}
 }
 
 .button-start-reset {
@@ -119,12 +96,7 @@
     animation-fill-mode: both;
 }
 
-.enter-game-animation {
-    animation: animation-go-bootom 1.0s;
-    transition: all .3s ease-in-out;
-    animation-fill-mode: forwards;
- }
-.button-start:hover {
+.button-start-reset:hover {
     background-color: lightyellow;
 }
 
