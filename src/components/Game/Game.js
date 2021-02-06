@@ -7,11 +7,11 @@ let randomWords = require('random-words');
 
 class Game extends React.Component {
   state = {
-    alphabet: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
-    usedLetters: [],
-    welcomescreen: false,
+    languageVersion: {
+      lettersToPick: [],
+      usedLetters: [],
+    },
     showModal: false,
-    pickedLanguage: ''
   }
   secretWord = '';
   displayedWord = '';
@@ -21,6 +21,40 @@ class Game extends React.Component {
   videoId = 'FBjYUCRDaGY';
   winVideoId = 'E-XoZAlEDkY';
   requestSend = false;
+  language = {
+    english: {
+      description: 'Your goal is to save the poor man from being hanged. You can achieve this by guessing all hidden letters. Pick letters from board below but be aware that every mistake You make, gets this Guy closer to dead. Good luck.',
+      pickLetterDescription: 'Pick letter',
+      usedLettersDescription: 'Used letters',
+      lettersToPick: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+      usedLetters: [],
+      scoreDescription: 'Score',
+      scoreboard:{
+        scoreboardDescription: 'Scoreboard',
+        typeNameDescription: 'Enter name',
+        saveDescription: 'Save',
+        scoredDescription: 'Scored',
+        ptsDescription: 'PTS',
+        toWeakDescription: 'You are weak and you do not deserve for a place in scoreboard.'
+      }
+    },
+    polish: {
+      description: 'Twoim celem jest uratowanie tego biednego człowieka przed powieszeniem. Możesz dokonac tego odgadująć wszystkie ukryte litery. Wybierz litery z tablicy poniżej ale miej na uwadze to że każdy błąd, który popełnisz przybliża tego nieszczęśnika do śmierci. Powodzenia.',
+      pickLetterDescription: 'Wybierz literę',
+      usedLettersDescription: 'Wybrane litery',
+      lettersToPick: ['A', 'Ą', 'B', 'C', 'Ć', 'D', 'E', 'Ę', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'Ł', 'M', 'N', 'Ń', 'O', 'Ó', 'P', 'Q', 'R', 'S', 'Ś', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Ż','Ź'],
+      usedLetters: [],
+      scoreDescription: 'Wynik',
+      scoreboard:{
+        scoreboardDescription: 'Tablica wyników',
+        typeNameDescription: 'Wpisz imię',
+        saveDescription: 'Zapisz',
+        scoredDescription: 'Osiągnął',
+        ptsDescription: 'PKT',
+        toWeakDescription: 'Jesteś zbyt słaby i nie zasługujesz aby zająć miejsce na tablicy wyników.'
+      }
+    }
+  }
 
   hiddenLetterReveal(letter) {
     let tempString = '';
@@ -66,7 +100,7 @@ class Game extends React.Component {
 
 async getPolishWord() {
   var wordIndex = this.randomIndex(0, 93475);
-  const response = await fetch('https://hangman2077-55a3b-default-rtdb.europe-west1.firebasedatabase.app/dictionary/' + wordIndex + '.json');
+  const response = await fetch('https://hangman2077-polish-dictionary-default-rtdb.europe-west1.firebasedatabase.app/dictionary/' + wordIndex + '.json');
   const data = await response.json();
   return data;
 }
@@ -74,20 +108,15 @@ async getPolishWord() {
   pickLetter(letter, index) {
     let tempState = this.state;
     this.hiddenLetterReveal(letter)
-    tempState.alphabet.splice(index, 1);
-    tempState.usedLetters.push(letter);
+    tempState.languageVersion.lettersToPick.splice(index, 1);
+    tempState.languageVersion.usedLetters.push(letter);
     this.setState(tempState);
     // eslint-disable-next-line no-undef
   }
 
   gameReset = (puzzleSolved) => {
-    console.log('Eluwinka')
     this.videoId = 'FBjYUCRDaGY';
-    const newState = {
-      alphabet: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
-      usedLetters: [],
-      welcomescreen: true,
-    }
+
     this.errorCounter = 0;
 
     this.generateWord();
@@ -96,7 +125,11 @@ async getPolishWord() {
       this.score = 0;
     }
     this.puzzleDiscovered = false;
-    this.setState(newState);
+
+    this.language.polish.usedLetters = [];
+    this.language.polish.lettersToPick = ['A', 'Ą', 'B', 'C', 'Ć', 'D', 'E', 'Ę', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'Ł', 'M', 'N', 'Ń', 'O', 'Ó', 'P', 'Q', 'R', 'S', 'Ś', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Ż','Ź'];
+    this.language.english.usedLetters = [];
+    this.language.english.lettersToPick = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
   }
 
   scoreboardDisplay = () => {
@@ -105,28 +138,43 @@ async getPolishWord() {
     this.setState(tempState);
   }
 
+  languageVersionSet() {
+    var tempState = this.state;
+    switch (this.props.location.pathname) {
+      case '/game/polish':
+          tempState.languageVersion = this.language.polish;
+        break;
+      case '/game/english':
+        tempState.languageVersion = this.language.english;
+        break;
+      default:
+        break;
+    }
+    this.setState(tempState);
+    console.log(this.state);
+  }
+
   componentDidMount() {
     this.generateWord();
-    this.setState(this.state);
+    this.languageVersionSet();
   }
 
   generateWord() {
-    const newState = {
-      alphabet: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
-      usedLetters: [],
-      welcomescreen: true,
-    }
+    console.log(this.language)
     switch (this.props.location.pathname) {
       case '/game/polish':
+        // const tempPolish = this.language.polish;
           this.getPolishWord().then((result) => {
             this.secretWord = result.toUpperCase();
             this.displayedWord =  this.secretWord.replace(/./g, '*');
-            this.setState(newState);
+            this.setState({languageVersion: Object.assign({}, this.language.polish)});
           });
         break;
       case '/game/english':
+        // const tempEnglish = this.language.english;
         this.secretWord = randomWords().toUpperCase();
         this.displayedWord = this.secretWord.replace(/./g, '*');
+        this.setState({languageVersion: Object.assign({}, this.language.english) });
         break;
       default:
         break;
@@ -145,8 +193,8 @@ async getPolishWord() {
     return(
       <div className="whole-game-modal open-animation">
         <div className="header">
-          <h3> Your goal is to save the poor man from being hanged. You can achieve this by guessing all hidden letters.
-          Pick letters from board below but be aware that every mistake You make, gets this Guy closer to dead. Good luck.
+          <h3>
+            {this.state.languageVersion.description}
         </h3>
           <h1 className="displayed-word">
             {this.displayedWord}
@@ -159,26 +207,26 @@ async getPolishWord() {
           <div className="game-content">
             <div className="keyboard">
               <div className="header">
-                Pick letter <br /> </div>
+              {this.state.languageVersion.pickLetterDescription} <br /> </div>
               {
-                this.state.alphabet.map((letter, index) => {
+                this.state.languageVersion.lettersToPick.map((letter, index) => {
                   return <button className="keyboard-button" disabled={this.errorCounter >= 9} key={letter} onClick={() => { this.pickLetter(letter, index) }}>{letter}</button>
                 })
               }
             </div>
             <div className="used-letter-and-score-section">
               <div>
-                <div className="header">Used letters <br /></div>
+                <div className="header">{this.state.languageVersion.usedLettersDescription} <br /></div>
                 <div className="used-letters">
                   {
-                    this.state.usedLetters.map((letter) => {
+                    this.state.languageVersion.usedLetters.map((letter) => {
                       return <div className="picked-letter" key={letter}>{letter}</div>
                     })
                   }
                 </div>
               </div>
               <div>
-                <div className="header">Score: {this.score}<br /></div>
+                <div className="header">{this.state.languageVersion.scoreDescription}: {this.score}<br /></div>
               </div>
             </div>
           </div>
@@ -187,16 +235,18 @@ async getPolishWord() {
               this.gameReset(this.puzzleDiscovered ? true : false)
             }
             }>{this.puzzleDiscovered ? 'Random new word' : 'Reset'}</button>
-            <button className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>Scoreboard</button>
+            <button className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>{this.state.languageVersion.scoreboard?.scoreboardDescription}</button>
+
           </div>
         </div>
         <YouTube videoId={this.videoId} opts={opts} onReady={this._onReady} />
         {
           this.state.showModal ? (<AddPlayerToScoreboard className="add-player-to-scoreboard"
-            scoreboardDisplay={this.scoreboardDisplay} 
+            scoreboardDisplay={this.scoreboardDisplay}
             gameReset={this.gameReset}
             puzzleDiscovered={this.puzzleDiscovered ? true : false}
             playerScore={this.score}
+            languageVersion={this.state.languageVersion.scoreboard}
             showNameInput={this.errorCounter === 9 ? true : false}/>) : (<div></div>)
         }
         <div className="footer">

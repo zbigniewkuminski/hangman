@@ -73,7 +73,7 @@ class AddPlayerToScoreboard extends React.Component {
         <div className="add-player-to-scoreboard">
           <h1 className="score-layout">
             <div>&nbsp;</div>
-            SCORES
+            {this.props.languageVersion?.scoreboardDescription.toUpperCase()}
             <button
               className="button"
               onClick={() => {
@@ -168,15 +168,15 @@ class AddPlayerToScoreboard extends React.Component {
               return (
                 <div className="add-score-section">
                   <div className="input-section">
-                    <input className="name-input" value={this.state.newPlayerName} maxLength='20' type='text' onChange={this.handleNewPlayerName} placeholder="Enter name" />
-                    <div className="score">Scored {this.props.playerScore} PTS</div>
+                    <input className="name-input" value={this.state.newPlayerName} maxLength='20' type='text' onChange={this.handleNewPlayerName} placeholder={this.props.languageVersion.typeNameDescription} />
+                    <div className="score">{this.props.languageVersion.scoredDescription} {this.props.playerScore} {this.props.languageVersion.ptsDescription}</div>
                   </div>
-                  <button className="button-save" disabled={!this.state.newPlayerName.trim()} onClick={() => { this.prepareToSave() }}>SAVE</button>
+                  <button className="button-save" disabled={!this.state.newPlayerName.trim()} onClick={() => { this.prepareToSave() }}>{this.props.languageVersion.saveDescription}</button>
                 </div>
               )
             }
             if (this.props.showNameInput && !this.checkIsNewScoreInTop10()) {
-              return ('You are weak and you do not deserve for a place in scoreboard.')
+              return (<div>{this.props.languageVersion.toWeakDescription}</div>)
             }
           })()}
         </div>
