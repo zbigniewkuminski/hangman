@@ -19,6 +19,7 @@ class Game extends React.Component {
   puzzleDiscovered = false;
   videoId = 'FBjYUCRDaGY';
   winVideoId = 'E-XoZAlEDkY';
+  lostVideoId = 'RHYOZaQuqtM';
   requestSend = false;
 
   hiddenLetterReveal(letter) {
@@ -49,7 +50,7 @@ class Game extends React.Component {
     if (this.errorCounter === 9) { // LOST GAME
       this.puzzleDiscovered = false;
       this.displayedWord = this.secretWord;
-      this.videoId = 'RHYOZaQuqtM';
+      this.videoId = this.lostVideoId;
       this.scoreboardDisplay();
     }
     else {

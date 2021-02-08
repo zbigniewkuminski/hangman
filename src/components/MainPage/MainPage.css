@@ -8,7 +8,7 @@
 }
 
 .hangman-gif {
-    height: 650px;
+    height: 600px;
     animation: appear-animation 1.5s;
     transition: all .3s ease-in-out;
 }
@@ -25,11 +25,12 @@
     to {opacity: 1}
 }
 
-.button-start-reset {
+.button {
     width: 150px;
     height: 50px;
     border: none;
     border-radius: 10px;
+    margin:10px;
     cursor: pointer;
 }
 

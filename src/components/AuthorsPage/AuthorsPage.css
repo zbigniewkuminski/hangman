@@ -1,0 +1,24 @@
+.authors-page-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+    font-size: 40px;
+}
+
+.authors {
+    animation: animation 0.2s ease infinite;
+}
+
+@keyframes animation {
+    0% {
+        color: white;
+    }
+    50% {
+        color: red;
+    }
+    100% {
+        color: white;
+    }
+}
