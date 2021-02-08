@@ -25,7 +25,8 @@
 .used-letters {
     display: flex;
     flex-direction: row;
-    width: 150px;
+    flex-wrap: wrap;
+    width: 250px;
     margin: 0 5px 15px 0;
 }
 
