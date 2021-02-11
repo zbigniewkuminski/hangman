@@ -56,6 +56,7 @@ class Game extends React.Component {
     else {
       this.displayedWord = tempString;
     }
+    console.log(this.secretWord)
   }
 
   randomIndex(min, max) {
@@ -190,7 +191,7 @@ class Game extends React.Component {
             </div>
           </div>
           <div className="button-section">
-            <button className="button-start-reset" onClick={() => { this.gameReset(this.puzzleDiscovered ? true : false)}}>{this.puzzleDiscovered ? 'Random new word' : 'Reset'}</button>
+            <button className="button-start-reset" onClick={() => { this.gameReset(this.puzzleDiscovered ? true : false)}}>{this.puzzleDiscovered ? this.state.languageVersion.randomNewWordDescription : 'Reset'}</button>
             <button className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>{this.state.languageVersion.scoreboard?.scoreboardDescription}</button>
             <button className="button-start-reset" onClick={() => { this.props.history.push("/authors") }}>{this.state.languageVersion.authorsDescription}</button>
           </div>
@@ -228,6 +229,7 @@ class LanguageVersion {
       usedLetters: [],
       scoreDescription: 'Score',
       authorsDescription: 'Authors',
+      randomNewWordDescription: 'Random new word',
       scoreboard: {
         scoreboardDescription: 'Scoreboard',
         typeNameDescription: 'Enter name',
@@ -245,6 +247,7 @@ class LanguageVersion {
       usedLetters: [],
       scoreDescription: 'Wynik',
       authorsDescription: 'Autorzy',
+      randomNewWordDescription: 'Losuj nowe słowo',
       scoreboard: {
         scoreboardDescription: 'Tablica wyników',
         typeNameDescription: 'Wpisz imię',
