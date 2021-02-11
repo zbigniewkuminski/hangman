@@ -6,7 +6,7 @@
 }
 
 .game-state {
-    height: 350px;
+    height: 270px;
 }
 
 .title {
@@ -89,6 +89,7 @@ button:hover {
     border: none;
     border-radius: 10px;
     cursor: pointer;
+    margin: 5px;
 }
 
 .open-animation {

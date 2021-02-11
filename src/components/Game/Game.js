@@ -190,12 +190,9 @@ class Game extends React.Component {
             </div>
           </div>
           <div className="button-section">
-            <button className="button-start-reset" onClick={() => {
-              this.gameReset(this.puzzleDiscovered ? true : false)
-            }
-            }>{this.puzzleDiscovered ? 'Random new word' : 'Reset'}</button>
+            <button className="button-start-reset" onClick={() => { this.gameReset(this.puzzleDiscovered ? true : false)}}>{this.puzzleDiscovered ? 'Random new word' : 'Reset'}</button>
             <button className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>{this.state.languageVersion.scoreboard?.scoreboardDescription}</button>
-
+            <button className="button-start-reset" onClick={() => { this.props.history.push("/authors") }}>{this.state.languageVersion.authorsDescription}</button>
           </div>
         </div>
         <YouTube videoId={this.videoId} opts={opts} onReady={this._onReady} />
@@ -230,6 +227,7 @@ class LanguageVersion {
       lettersToPick: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
       usedLetters: [],
       scoreDescription: 'Score',
+      authorsDescription: 'Authors',
       scoreboard: {
         scoreboardDescription: 'Scoreboard',
         typeNameDescription: 'Enter name',
@@ -246,6 +244,7 @@ class LanguageVersion {
       lettersToPick: ['A', 'Ą', 'B', 'C', 'Ć', 'D', 'E', 'Ę', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'Ł', 'M', 'N', 'Ń', 'O', 'Ó', 'P', 'Q', 'R', 'S', 'Ś', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Ż', 'Ź'],
       usedLetters: [],
       scoreDescription: 'Wynik',
+      authorsDescription: 'Autorzy',
       scoreboard: {
         scoreboardDescription: 'Tablica wyników',
         typeNameDescription: 'Wpisz imię',
