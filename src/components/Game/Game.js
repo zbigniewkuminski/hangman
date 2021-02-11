@@ -4,14 +4,13 @@ import YouTube from 'react-youtube';
 import AddPlayerToScoreboard from '../AddPlayerToScoreboard/AddPlayerToScoreboard';
 let randomWords = require('random-words');
 
-
 class Game extends React.Component {
   state = {
-    alphabet: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
-    usedLetters: [],
-    welcomescreen: false,
+    languageVersion: {
+      lettersToPick: [],
+      usedLetters: [],
+    },
     showModal: false,
-    pickedLanguage: ''
   }
   secretWord = '';
   displayedWord = '';
@@ -20,6 +19,7 @@ class Game extends React.Component {
   puzzleDiscovered = false;
   videoId = 'FBjYUCRDaGY';
   winVideoId = 'E-XoZAlEDkY';
+  lostVideoId = 'RHYOZaQuqtM';
   requestSend = false;
 
   hiddenLetterReveal(letter) {
@@ -50,44 +50,40 @@ class Game extends React.Component {
     if (this.errorCounter === 9) { // LOST GAME
       this.puzzleDiscovered = false;
       this.displayedWord = this.secretWord;
-      this.videoId = 'RHYOZaQuqtM';
+      this.videoId = this.lostVideoId;
       this.scoreboardDisplay();
     }
     else {
       this.displayedWord = tempString;
     }
+    console.log(this.secretWord)
   }
 
-  randomIndex (min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min;
-}
+  randomIndex(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
 
-async getPolishWord() {
-  var wordIndex = this.randomIndex(0, 93475);
-  const response = await fetch('https://hangman2077-55a3b-default-rtdb.europe-west1.firebasedatabase.app/dictionary/' + wordIndex + '.json');
-  const data = await response.json();
-  return data;
-}
+  async getPolishWord() {
+    var wordIndex = this.randomIndex(0, 93475);
+    const response = await fetch('https://hangman2077-polish-dictionary-default-rtdb.europe-west1.firebasedatabase.app/dictionary/' + wordIndex + '.json');
+    const data = await response.json();
+    return data;
+  }
 
   pickLetter(letter, index) {
     let tempState = this.state;
     this.hiddenLetterReveal(letter)
-    tempState.alphabet.splice(index, 1);
-    tempState.usedLetters.push(letter);
+    tempState.languageVersion.lettersToPick.splice(index, 1);
+    tempState.languageVersion.usedLetters.push(letter);
     this.setState(tempState);
     // eslint-disable-next-line no-undef
   }
 
   gameReset = (puzzleSolved) => {
-    console.log('Eluwinka')
     this.videoId = 'FBjYUCRDaGY';
-    const newState = {
-      alphabet: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
-      usedLetters: [],
-      welcomescreen: true,
-    }
+
     this.errorCounter = 0;
 
     this.generateWord();
@@ -96,7 +92,6 @@ async getPolishWord() {
       this.score = 0;
     }
     this.puzzleDiscovered = false;
-    this.setState(newState);
   }
 
   scoreboardDisplay = () => {
@@ -105,28 +100,41 @@ async getPolishWord() {
     this.setState(tempState);
   }
 
+  languageVersionSet() {
+    switch (this.props.location.pathname) {
+      case '/game/polish':
+        const tempPolishVersion = new LanguageVersion('polish');
+        this.setState({ languageVersion: tempPolishVersion.language });
+        break;
+      case '/game/english':
+        const tempEnglishVersion = new LanguageVersion('english');
+        this.setState({ languageVersion: tempEnglishVersion.language });
+        break;
+      default:
+        break;
+    }
+  }
+
   componentDidMount() {
     this.generateWord();
-    this.setState(this.state);
+    this.languageVersionSet();
   }
 
   generateWord() {
-    const newState = {
-      alphabet: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
-      usedLetters: [],
-      welcomescreen: true,
-    }
     switch (this.props.location.pathname) {
       case '/game/polish':
-          this.getPolishWord().then((result) => {
-            this.secretWord = result.toUpperCase();
-            this.displayedWord =  this.secretWord.replace(/./g, '*');
-            this.setState(newState);
-          });
+        this.getPolishWord().then((result) => {
+          this.secretWord = result.toUpperCase();
+          this.displayedWord = this.secretWord.replace(/./g, '*');
+          const tempPolishVersion = new LanguageVersion('polish');
+          this.setState({ languageVersion: tempPolishVersion.language });
+        });
         break;
       case '/game/english':
         this.secretWord = randomWords().toUpperCase();
         this.displayedWord = this.secretWord.replace(/./g, '*');
+        const tempEnglishVersion = new LanguageVersion('english');
+        this.setState({ languageVersion: tempEnglishVersion.language });
         break;
       default:
         break;
@@ -142,12 +150,12 @@ async getPolishWord() {
       },
     };
 
-    return(
+    return (
       <div className="whole-game-modal open-animation">
         <div className="header">
-          <h3> Your goal is to save the poor man from being hanged. You can achieve this by guessing all hidden letters.
-          Pick letters from board below but be aware that every mistake You make, gets this Guy closer to dead. Good luck.
-        </h3>
+          <h3>
+            {this.state.languageVersion.description}
+          </h3>
           <h1 className="displayed-word">
             {this.displayedWord}
           </h1>
@@ -159,45 +167,44 @@ async getPolishWord() {
           <div className="game-content">
             <div className="keyboard">
               <div className="header">
-                Pick letter <br /> </div>
+                {this.state.languageVersion.pickLetterDescription} <br /> </div>
               {
-                this.state.alphabet.map((letter, index) => {
+                this.state.languageVersion.lettersToPick.map((letter, index) => {
                   return <button className="keyboard-button" disabled={this.errorCounter >= 9} key={letter} onClick={() => { this.pickLetter(letter, index) }}>{letter}</button>
                 })
               }
             </div>
             <div className="used-letter-and-score-section">
               <div>
-                <div className="header">Used letters <br /></div>
+                <div className="header">{this.state.languageVersion.usedLettersDescription} <br /></div>
                 <div className="used-letters">
                   {
-                    this.state.usedLetters.map((letter) => {
+                    this.state.languageVersion.usedLetters.map((letter) => {
                       return <div className="picked-letter" key={letter}>{letter}</div>
                     })
                   }
                 </div>
               </div>
               <div>
-                <div className="header">Score: {this.score}<br /></div>
+                <div className="header">{this.state.languageVersion.scoreDescription}: {this.score}<br /></div>
               </div>
             </div>
           </div>
           <div className="button-section">
-            <button className="button-start-reset" onClick={() => {
-              this.gameReset(this.puzzleDiscovered ? true : false)
-            }
-            }>{this.puzzleDiscovered ? 'Random new word' : 'Reset'}</button>
-            <button className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>Scoreboard</button>
+            <button className="button-start-reset" onClick={() => { this.gameReset(this.puzzleDiscovered ? true : false)}}>{this.puzzleDiscovered ? this.state.languageVersion.randomNewWordDescription : 'Reset'}</button>
+            <button className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>{this.state.languageVersion.scoreboard?.scoreboardDescription}</button>
+            <button className="button-start-reset" onClick={() => { this.props.history.push("/authors") }}>{this.state.languageVersion.authorsDescription}</button>
           </div>
         </div>
         <YouTube videoId={this.videoId} opts={opts} onReady={this._onReady} />
         {
           this.state.showModal ? (<AddPlayerToScoreboard className="add-player-to-scoreboard"
-            scoreboardDisplay={this.scoreboardDisplay} 
+            scoreboardDisplay={this.scoreboardDisplay}
             gameReset={this.gameReset}
             puzzleDiscovered={this.puzzleDiscovered ? true : false}
             playerScore={this.score}
-            showNameInput={this.errorCounter === 9 ? true : false}/>) : (<div></div>)
+            languageVersion={this.state.languageVersion.scoreboard}
+            showNameInput={this.errorCounter === 9 ? true : false} />) : (<div></div>)
         }
         <div className="footer">
         </div>
@@ -205,9 +212,55 @@ async getPolishWord() {
   }
 
   render() {
-    console.log(this.secretWord);
-      return (this.getGameHtml());
+    return (this.getGameHtml());
   }
 }
 
 export default Game;
+
+
+class LanguageVersion {
+  languagesContainer = {
+    english: {
+      description: 'Your goal is to save the poor man from being hanged. You can achieve this by guessing all hidden letters. Pick letters from board below but be aware that every mistake You make, gets this Guy closer to dead. Good luck.',
+      pickLetterDescription: 'Pick letter',
+      usedLettersDescription: 'Used letters',
+      lettersToPick: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+      usedLetters: [],
+      scoreDescription: 'Score',
+      authorsDescription: 'Authors',
+      randomNewWordDescription: 'Random new word',
+      scoreboard: {
+        scoreboardDescription: 'Scoreboard',
+        typeNameDescription: 'Enter name',
+        saveDescription: 'Save',
+        scoredDescription: 'Scored',
+        ptsDescription: 'PTS',
+        toWeakDescription: 'You are weak and you do not deserve for a place in scoreboard.'
+      }
+    },
+    polish: {
+      description: 'Twoim celem jest uratowanie tego biednego człowieka przed powieszeniem. Możesz dokonac tego odgadująć wszystkie ukryte litery. Wybierz litery z tablicy poniżej ale miej na uwadze to że każdy błąd, który popełnisz przybliża tego nieszczęśnika do śmierci. Powodzenia.',
+      pickLetterDescription: 'Wybierz literę',
+      usedLettersDescription: 'Wybrane litery',
+      lettersToPick: ['A', 'Ą', 'B', 'C', 'Ć', 'D', 'E', 'Ę', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'Ł', 'M', 'N', 'Ń', 'O', 'Ó', 'P', 'Q', 'R', 'S', 'Ś', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Ż', 'Ź'],
+      usedLetters: [],
+      scoreDescription: 'Wynik',
+      authorsDescription: 'Autorzy',
+      randomNewWordDescription: 'Losuj nowe słowo',
+      scoreboard: {
+        scoreboardDescription: 'Tablica wyników',
+        typeNameDescription: 'Wpisz imię',
+        saveDescription: 'Zapisz',
+        scoredDescription: 'Osiągnął',
+        ptsDescription: 'PKT',
+        toWeakDescription: 'Jesteś zbyt słaby i nie zasługujesz aby zająć miejsce na tablicy wyników.'
+      }
+    }
+  }
+  language;
+
+  constructor(selectedLanguage) {
+    this.language = this.languagesContainer[selectedLanguage];
+  }
+}
