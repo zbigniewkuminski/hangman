@@ -151,21 +151,21 @@ class Game extends React.Component {
     };
 
     return (
-      <div className="whole-game-modal open-animation">
-        <div className="header">
+      <div className="game open-animation">
+        <div className="header mt-4 mb-4">
           <h3>
             {this.state.languageVersion.description}
           </h3>
           <h1 className="displayed-word">
             {this.displayedWord}
           </h1>
-          <div>
-            <img className="game-state" src={require('./../../assets/hangman' + this.errorCounter + '.png')} alt="test"></img>
+          <div className="mb-3">
+            <img className="game-state-image" src={require('./../../assets/hangman' + this.errorCounter + '.png')} alt="test"></img>
           </div>
         </div>
-        <div className="main-content">
-          <div className="game-content">
-            <div className="keyboard">
+        <div>
+          <div className="row justify-content-center">
+            <div className="col-md-5 col-sm-12">
               <div className="header">
                 {this.state.languageVersion.pickLetterDescription} <br /> </div>
               {
@@ -174,26 +174,24 @@ class Game extends React.Component {
                 })
               }
             </div>
-            <div className="used-letter-and-score-section">
-              <div>
-                <div className="header">{this.state.languageVersion.usedLettersDescription} <br /></div>
-                <div className="used-letters">
-                  {
-                    this.state.languageVersion.usedLetters.map((letter) => {
-                      return <div className="picked-letter" key={letter}>{letter}</div>
-                    })
-                  }
-                </div>
+            <div className="col-md-7 col-sm-12">
+              <div className="header">{this.state.languageVersion.usedLettersDescription} <br /></div>
+              <div className="row ">
+                {
+                  this.state.languageVersion.usedLetters.map((letter) => {
+                    return <div className="mr-1" key={letter}>{letter}</div>
+                  })
+                }
               </div>
               <div>
                 <div className="header">{this.state.languageVersion.scoreDescription}: {this.score}<br /></div>
               </div>
+              <div>
+                <button className="button-start-reset" onClick={() => { this.gameReset(this.puzzleDiscovered ? true : false) }}>{this.puzzleDiscovered ? this.state.languageVersion.randomNewWordDescription : 'Reset'}</button>
+                <button className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>{this.state.languageVersion.scoreboard?.scoreboardDescription}</button>
+                <button className="button-start-reset" onClick={() => { this.props.history.push("/authors") }}>{this.state.languageVersion.authorsDescription}</button>
+              </div>
             </div>
-          </div>
-          <div className="button-section">
-            <button className="button-start-reset" onClick={() => { this.gameReset(this.puzzleDiscovered ? true : false)}}>{this.puzzleDiscovered ? this.state.languageVersion.randomNewWordDescription : 'Reset'}</button>
-            <button className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>{this.state.languageVersion.scoreboard?.scoreboardDescription}</button>
-            <button className="button-start-reset" onClick={() => { this.props.history.push("/authors") }}>{this.state.languageVersion.authorsDescription}</button>
           </div>
         </div>
         <YouTube videoId={this.videoId} opts={opts} onReady={this._onReady} />
@@ -240,7 +238,7 @@ class LanguageVersion {
       }
     },
     polish: {
-      description: 'Twoim celem jest uratowanie tego biednego człowieka przed powieszeniem. Możesz dokonac tego odgadująć wszystkie ukryte litery. Wybierz litery z tablicy poniżej ale miej na uwadze to że każdy błąd, który popełnisz przybliża tego nieszczęśnika do śmierci. Powodzenia.',
+      description: 'Twoim celem jest uratowanie tego biednego człowieka przed powieszeniem. Możesz dokonać tego odgadując wszystkie ukryte litery. Wybierz litery z tablicy poniżej ale miej na uwadze to że każdy błąd, który popełnisz przybliża tego nieszczęśnika do śmierci. Powodzenia.',
       pickLetterDescription: 'Wybierz literę',
       usedLettersDescription: 'Wybrane litery',
       lettersToPick: ['A', 'Ą', 'B', 'C', 'Ć', 'D', 'E', 'Ę', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'Ł', 'M', 'N', 'Ń', 'O', 'Ó', 'P', 'Q', 'R', 'S', 'Ś', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Ż', 'Ź'],

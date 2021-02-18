@@ -1,17 +1,17 @@
 .App {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
+  height: 100%;
+  min-height: 100vh; 
   background-image: url("./assets/background.png");
   background-size: cover;
   background-repeat: no-repeat;
+  overflow-x: hidden;
 }
 
 @font-face{
   font-family:'retroFont';
-  src: url('./fonts/PressStart2P-Regular.ttf')
+  src: url('./fonts/PressStart2P-Regular.ttf');
 }
 
 body,button{
-  font-family:retroFont;
+  font-family: retroFont !important;
 }
