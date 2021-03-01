@@ -13,9 +13,9 @@ class MainPage extends React.Component {
       <img src={require('./../../assets/hangman_home_page.gif')} className="hangman-gif" alt="test"></img>
       <div >
         <button className="button"
-          onClick={() => { this.setState({ enterAnimation: true }); this.props.history.push("/game/polish")}}>Polski</button>
+          onClick={() => { this.setState({ enterAnimation: true }); this.props.history.push("/pl/game")}}>Polski</button>
         <button className="button"
-          onClick={() => { this.setState({ enterAnimation: true }); this.props.history.push("/game/english")}}>English</button>
+          onClick={() => { this.setState({ enterAnimation: true }); this.props.history.push("/en/game")}}>English</button>
       </div>
     </div>);
   }

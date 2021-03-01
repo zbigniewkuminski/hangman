@@ -11,9 +11,9 @@ function App() {
     <div className="App">
         <Navbar/>
           <Switch>
-          <Route path="/mainpage" component={MainPage} />
-          <Route path="/game" component={Game} />
-          <Route path="/authors" component={AuthorsPage} />
+          <Route path="/*/mainpage" component={MainPage} />
+          <Route path="/*/game" component={Game} />
+          <Route path="/*/authors" component={AuthorsPage} />
           <Redirect to="/mainpage"/>
       </Switch>
     </div>

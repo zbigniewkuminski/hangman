@@ -112,11 +112,11 @@ class Game extends React.Component {
   languageVersionSet() {
     console.log(this.props.location.pathname)
     switch (this.props.location.pathname) {
-      case '/game/polish':
+      case '/pl/game':
         const tempPolishVersion = new LanguageVersion('polish');
         this.setState({ languageVersion: tempPolishVersion.language });
         break;
-      case '/game/english':
+      case '/en/game':
         const tempEnglishVersion = new LanguageVersion('english');
         this.setState({ languageVersion: tempEnglishVersion.language });
         break;
@@ -132,7 +132,7 @@ class Game extends React.Component {
 
   generateWord() {
     switch (this.props.location.pathname) {
-      case '/game/polish':
+      case '/pl/game':
         this.getPolishWord().then((result) => {
           this.secretWord = result.toUpperCase();
           this.displayedWord = this.secretWord.replace(/./g, '*');
@@ -140,7 +140,7 @@ class Game extends React.Component {
           this.setState({ languageVersion: tempPolishVersion.language });
         });
         break;
-      case '/game/english':
+      case '/en/game':
         this.secretWord = randomWords().toUpperCase();
         this.displayedWord = this.secretWord.replace(/./g, '*');
         const tempEnglishVersion = new LanguageVersion('english');

@@ -12,9 +12,9 @@ class Navbar extends React.Component {
   if (this.state.hooveredOverGameButton) {
     return (<div>
       <button className="dropdown-button"
-      onClick={() => {this.props.history.push("/game/polish")}}>Polski</button>
+      onClick={() => {this.props.history.push("/pl/game")}}>Polski</button>
       <button className="dropdown-button"
-      onClick={() => {this.props.history.push("/game/english")}}>English</button>
+      onClick={() => {this.props.history.push("/en/game")}}>English</button>
       </div>
     )
    }
@@ -23,24 +23,24 @@ class Navbar extends React.Component {
   toggleLanguage() {
     this.state.toggleLanguage=(!this.state.toggleLanguage);
     if(this.state.toggleLanguage===false) {
-      return (this.props.history.push("/game/english"));
+      return (this.props.history.push("/en/game"));
     }
     else {
-      return (this.props.history.push("/game/polish"));
+      return (this.props.history.push("/pl/game"));
     }
   }
 
   render() {
     return (
   <div className="navbar">
-    <button className="navbar-button" onClick={() => {this.props.history.push("/mainpage")}}>Home</button>
+    <button className="navbar-button" onClick={() => {this.props.history.push("/*/mainpage")}}>Home</button>
 
     <div
     onMouseEnter = {() => {this.setState({hooveredOverGameButton: true})}}
     onMouseLeave = {() => {this.setState({hooveredOverGameButton: false})}}>
 
-    <button className="navbar-button" onClick={() => {this.props.history.push("/game")}}>Game</button>{this.hooverDisplayGameOptions()}</div>
-    <button className="navbar-button" onClick={() => {this.props.history.push("/authors")}}>Authors</button>
+    <button className="navbar-button" onClick={() => {this.props.history.push("/*/game")}}>Game</button>{this.hooverDisplayGameOptions()}</div>
+    <button className="navbar-button" onClick={() => {this.props.history.push("/*/authors")}}>Authors</button>
     <button className="navbar-button" onClick={() => {this.toggleLanguage()}}>Language</button>
     <span className="authors-button">ZBYDAN</span>
   </div>
