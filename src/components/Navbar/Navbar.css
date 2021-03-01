@@ -1,0 +1,46 @@
+.navbar {
+display: flex;
+flex-direction: row;
+color:white;
+padding: 14px;
+margin-left: 475px;
+position: absolute;
+top: 0;
+z-index: 5;
+}
+
+.navbar-button {
+color:rgb(0, 0, 0);
+margin: 5px;
+height: 20px;
+width: 118px;
+border-radius: 6px;
+}
+
+.dropdown-button {
+display: flex;
+flex-direction: column;
+height: 20px;
+margin-left: 5px;
+width: 118px;
+margin: 5px;
+border-radius: 6px;
+margin-top: 0px;
+text-align: center;}
+
+.authors-button {
+    animation: animation 0.2s ease infinite;
+    margin-left: 450px;
+}
+
+@keyframes animation {
+    0% {
+        color: white;
+    }
+    50% {
+        color: red;
+    }
+    100% {
+        color: white;
+    }
+}

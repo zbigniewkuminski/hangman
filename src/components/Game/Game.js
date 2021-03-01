@@ -100,7 +100,17 @@ class Game extends React.Component {
     this.setState(tempState);
   }
 
+  componentWillMount() {
+    this.props.history.listen((location,action) => {
+    setTimeout(()=>{
+      this.generateWord();
+      this.languageVersionSet()}, 200);
+      this.gameReset();
+    });
+}
+
   languageVersionSet() {
+    console.log(this.props.location.pathname)
     switch (this.props.location.pathname) {
       case '/game/polish':
         const tempPolishVersion = new LanguageVersion('polish');
