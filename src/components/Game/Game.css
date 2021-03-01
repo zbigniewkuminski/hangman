@@ -36,6 +36,7 @@ h3 {
 
 button:hover {
     cursor: pointer;
+    background-color: lightyellow;
 }
 
 @keyframes appear-animation {
