@@ -112,29 +112,29 @@ class AddPlayerToScoreboard extends React.Component {
               )
             }
           })()}
+          {(() => {
+            if (this.props.showNameInput && this.checkIsNewScoreInTop10()) {
+              return (
+                <div className="mt-3">
+                  <div className="row justify-content-center">
+                    <input className="name-input" value={this.state.newPlayerName} maxLength='20' type='text' onChange={this.handleNewPlayerName} placeholder={this.props.languageVersion.typeNameDescription} />
+                    <div className="score">{this.props.languageVersion.scoredDescription} {this.props.playerScore} {this.props.languageVersion.ptsDescription}</div>
+                  </div>
+                  <div className="row justify-content-center">
+                    <button className="button-save" disabled={!this.state.newPlayerName.trim()} onClick={() => { this.prepareToSave() }}>{this.props.languageVersion.saveDescription}</button>
+                  </div>
+                </div>
+              )
+            }
+            if (this.props.showNameInput && !this.checkIsNewScoreInTop10()) {
+              return (<div className="row">
+                <div className="col-md-12 low-score-info">
+                  {this.props.languageVersion.toWeakDescription}
+                </div>
+              </div>)
+            }
+          })()}
         </div>
-        {(() => {
-          if (this.props.showNameInput && this.checkIsNewScoreInTop10()) {
-            return (
-              <div className="mt-3">
-                <div className="row justify-content-center">
-                  <input className="name-input" value={this.state.newPlayerName} maxLength='20' type='text' onChange={this.handleNewPlayerName} placeholder={this.props.languageVersion.typeNameDescription} />
-                  <div className="score">{this.props.languageVersion.scoredDescription} {this.props.playerScore} {this.props.languageVersion.ptsDescription}</div>
-                </div>
-                <div className="row justify-content-center">
-                  <button className="button-save" disabled={!this.state.newPlayerName.trim()} onClick={() => { this.prepareToSave() }}>{this.props.languageVersion.saveDescription}</button>
-                </div>
-              </div>
-            )
-          }
-          if (this.props.showNameInput && !this.checkIsNewScoreInTop10()) {
-            return (<div className="row">
-              <div className="col-md-12 low-score-info">
-                {this.props.languageVersion.toWeakDescription}
-              </div>
-            </div>)
-          }
-        })()}
       </div>
     );
   }
