@@ -10,12 +10,17 @@
 
 .add-player-to-scoreboard {
     position: unset;
-    width: 55vw;
-    height: 80vh;
+    width: 75vw;
+    min-height: 80vh;
     background-color: black;
     margin-top: 5%;
-    padding: 1px 40px;
+    padding: 20px 40px;
     border-radius: 38px;
+}
+
+.add-player-to-scoreboard-title {
+    font-size: 25px;
+    text-align: center;
 }
 
 .button {
@@ -24,6 +29,10 @@
     height: 40px;
     border: none;
     border-radius: 10px;
+}
+
+.button:hover{
+    background-color: lightyellow;
 }
 
 .scores-displaying {
@@ -90,6 +99,10 @@
     border: none;
     border-radius: 10px;
     cursor: pointer;
+}
+
+.button-save:hover {
+    background-color: lightyellow;
 }
 
 .low-score-info {
