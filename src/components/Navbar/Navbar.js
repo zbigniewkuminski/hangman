@@ -21,12 +21,14 @@ class Navbar extends React.Component {
   }
 
   toggleLanguage() {
+    this.state.toggleLanguage=(!this.state.toggleLanguage);
     if(this.state.toggleLanguage===false) {
-      return ('x')
+      return (this.props.history.push("/game/english"));
     }
     else {
-      return ('s')}
+      return (this.props.history.push("/game/polish"));
     }
+  }
 
   render() {
     return (
