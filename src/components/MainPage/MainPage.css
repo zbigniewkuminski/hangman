@@ -49,6 +49,6 @@
     animation-fill-mode: forwards;
  }
 
-.button-start-reset:hover {
+.language-button:hover {
     background-color: lightyellow;
 }
