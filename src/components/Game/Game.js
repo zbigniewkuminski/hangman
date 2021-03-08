@@ -110,7 +110,6 @@ class Game extends React.Component {
 }
 
   languageVersionSet() {
-    console.log(this.props.location.pathname)
     switch (this.props.location.pathname) {
       case '/pl/game':
         const tempPolishVersion = new LanguageVersion('polish');
@@ -203,7 +202,6 @@ class Game extends React.Component {
           <div className="button-section">
             <button className="button-start-reset" onClick={() => { this.gameReset(this.puzzleDiscovered ? true : false)}}>{this.puzzleDiscovered ? this.state.languageVersion.randomNewWordDescription : 'Reset'}</button>
             <button className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>{this.state.languageVersion.scoreboard?.scoreboardDescription}</button>
-            <button className="button-start-reset" onClick={() => { this.props.history.push("/authors") }}>{this.state.languageVersion.authorsDescription}</button>
           </div>
         </div>
         <YouTube videoId={this.videoId} opts={opts} onReady={this._onReady} />

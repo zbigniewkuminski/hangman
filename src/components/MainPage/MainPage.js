@@ -7,15 +7,22 @@ class MainPage extends React.Component {
     enterAnimation: false
   }
 
+  startGame(lang) {
+    localStorage.setItem('lang', lang);
+    this.props.history.push("/"+lang+"/game");
+    this.setState({ enterAnimation: true });
+    }
+
   render() {
     return (<div className={'welcome-screen ' + (this.state.enterAnimation ? "enter-game-animation " : "open-animation ")}>
       <div className="title enter-game-animation-top">Hangman 2077</div>
       <img src={require('./../../assets/hangman_home_page.gif')} className="hangman-gif" alt="test"></img>
       <div >
         <button className="button"
-          onClick={() => { this.setState({ enterAnimation: true }); this.props.history.push("/pl/game")}}>Polski</button>
+          onClick={() => {this.startGame('pl')}}>Polski</button>
+
         <button className="button"
-          onClick={() => { this.setState({ enterAnimation: true }); this.props.history.push("/en/game")}}>English</button>
+          onClick={() => { this.startGame('en')}}>English</button>
       </div>
     </div>);
   }

@@ -54,3 +54,7 @@
 .button-start-reset:hover {
     background-color: lightyellow;
 }
+
+.button:hover {
+    background-color: lightyellow;
+}

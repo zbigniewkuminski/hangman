@@ -14,7 +14,7 @@ function App() {
           <Route path="/*/mainpage" component={MainPage} />
           <Route path="/*/game" component={Game} />
           <Route path="/*/authors" component={AuthorsPage} />
-          <Redirect to="/mainpage"/>
+          <Redirect to="/en/mainpage"/>
       </Switch>
     </div>
   );

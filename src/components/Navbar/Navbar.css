@@ -12,8 +12,8 @@ z-index: 5;
 .navbar-button {
 color:rgb(0, 0, 0);
 margin: 5px;
-height: 20px;
-width: 118px;
+height: 35px;
+width: 130px;
 border-radius: 6px;
 }
 
@@ -22,15 +22,24 @@ display: flex;
 flex-direction: column;
 height: 20px;
 margin-left: 5px;
-width: 118px;
+width: 130px;
 margin: 5px;
 border-radius: 6px;
 margin-top: 0px;
-text-align: center;}
+align-items: center;
+}
 
 .authors-button {
     animation: animation 0.2s ease infinite;
     margin-left: 450px;
+}
+
+.navbar-button:hover {
+    background-color: lightyellow;
+}
+
+.dropdown-button:hover {
+    background-color: lightyellow;
 }
 
 @keyframes animation {
