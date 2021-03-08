@@ -10,77 +10,69 @@
 
 .add-player-to-scoreboard {
     position: unset;
-    width: 55vw;
-    height: 70vh;
+    width: 75vw;
+    min-height: 80vh;
     background-color: black;
-    margin-top: 10%;
-    padding-top: 1px;
+    margin-top: 60px;
+    padding: 20px 40px;
     border-radius: 38px;
 }
 
-.score-layout {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 25px;
+.add-player-to-scoreboard-title {
+    font-size: 25px;
+    text-align: center;
 }
 
 .button {
     cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+}
+
+.button:hover{
+    background-color: lightyellow;
 }
 
 .scores-displaying {
-    display: flex;
-    justify-content: center;
     font-size: 1.7em;
 }
 
 .scores-displaying-single-element {
     margin: 10px;
-}
-
-.podium {
-    font-size: 1.7em;
-    margin: 0 30px;
-    background-image: url('../../assets/podium.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 230px;
+    font-size: 16px;
 }
 
 .first-place {
-    display: flex;
-    justify-content: center;
-    width: 33%;
+    width: 100%;
     color: gold;
-    margin: 0 33%;
+    text-align: center;
 }
 
 .second-place {
-    display: flex;
-    justify-content: flex-start;
-    width: 33%;
+    width: 100%;
     color: silver;
+    text-align: center;
 }
 
 .third-place {
-    display: flex;
-    justify-content: flex-end;
-    width: 33%;
+    width: 100%;
     color: rgb(139, 73, 29);
-    margin-left: 66%;
+    text-align: center;
 }
 
-.add-score-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
+.podium-first {
+    height: 120px;
+    background: gold;
 }
-
-.input-section {
-    flex-direction: row;
-    display: flex;
-    margin-bottom: 10px;
+.podium-second {
+    height: 80px;
+    background: silver;
+}
+.podium-third {
+    height: 40px;
+    background: rgb(139, 73, 29);
 }
 
 .name-input {
@@ -102,10 +94,17 @@
 }
 
 .button-save{
-    margin-top: 10px;
     width: 150px;
     height: 50px;
     border: none;
     border-radius: 10px;
     cursor: pointer;
+}
+
+.button-save:hover {
+    background-color: lightyellow;
+}
+
+.low-score-info {
+    text-align: center;
 }

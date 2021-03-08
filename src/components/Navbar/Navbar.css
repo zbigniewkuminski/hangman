@@ -1,55 +1,48 @@
-.navbar {
-display: flex;
-flex-direction: row;
-color:white;
-padding: 14px;
-margin-left: 475px;
-position: absolute;
-top: 0;
-z-index: 5;
+.navbar-menu {
+  position: absolute;
+  z-index: 2;
 }
 
 .navbar-button {
-color:rgb(0, 0, 0);
-margin: 5px;
-height: 35px;
-width: 130px;
-border-radius: 6px;
+  color: rgb(0, 0, 0);
+  margin: 5px;
+  height: 51px;
+  width: 160px;
+  border-radius: 6px;
 }
 
 .dropdown-button {
-display: flex;
-flex-direction: column;
-height: 20px;
-margin-left: 5px;
-width: 130px;
-margin: 5px;
-border-radius: 6px;
-margin-top: 0px;
-align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 30px;
+  margin-left: 5px;
+  width: 160px;
+  margin: 5px;
+  border-radius: 6px;
+  margin-top: 0px;
+  align-items: center;
 }
 
 .authors-button {
-    animation: animation 0.2s ease infinite;
-    margin-left: 450px;
+  animation: animation 0.2s ease infinite;
 }
 
 .navbar-button:hover {
-    background-color: lightyellow;
+  background-color: lightyellow;
 }
 
 .dropdown-button:hover {
-    background-color: lightyellow;
+  background-color: lightyellow;
 }
 
 @keyframes animation {
-    0% {
-        color: white;
-    }
-    50% {
-        color: red;
-    }
-    100% {
-        color: white;
-    }
+  0% {
+    color: white;
+  }
+  50% {
+    color: red;
+  }
+  100% {
+    color: white;
+  }
 }

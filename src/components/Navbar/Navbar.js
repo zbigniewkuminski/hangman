@@ -55,7 +55,8 @@ generateCorrectLanguageDescriptions() {
   render() {
     console.log(this.state.currentLanguage);
     return (
-  <div className="navbar">
+<div className="navbar-menu row">
+  <div className="row col-md-11 justify-content-between">
     <button className="navbar-button" onClick={() => {this.props.history.push("/"+this.state.currentLanguage+"/mainpage")}}>{this.state.languageVersion.homeButtonDescription}</button>
 
     <div
@@ -71,8 +72,11 @@ generateCorrectLanguageDescriptions() {
          return (<button className="navbar-button" onClick={() => {this.toggleLanguage(this.state.currentLanguage === 'en' ? 'pl' : 'en')}}>{this.state.languageVersion.languageButtonDescription}</button>)}}
       )()
     }
-    <span className="authors-button">ZBYDAN</span>
   </div>
+   <div className="col-md-1">
+    <span className="authors-button">ZBYDAN</span>
+   </div>
+</div>
 )}
 }
 

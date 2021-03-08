@@ -15,13 +15,13 @@ class MainPage extends React.Component {
 
   render() {
     return (<div className={'welcome-screen ' + (this.state.enterAnimation ? "enter-game-animation " : "open-animation ")}>
-      <div className="title enter-game-animation-top">Hangman 2077</div>
-      <img src={require('./../../assets/hangman_home_page.gif')} className="hangman-gif" alt="test"></img>
-      <div >
-        <button className="button"
+    <div className="title enter-game-animation-top row justify-content-center">Hangman 2077</div>
+    <img src={require('./../../assets/hangman_home_page.gif')} className="hangman-gif row justify-content-center" alt="test"></img>
+    <div className="row justify-content-center">
+        <button className="language-button"
           onClick={() => {this.startGame('pl')}}>Polski</button>
 
-        <button className="button"
+        <button className="language-button"
           onClick={() => { this.startGame('en')}}>English</button>
       </div>
     </div>);
