@@ -5,10 +5,7 @@
     flex-direction: column;
     color: white;
     font-size: 40px;
-}
-
-.authors {
-    animation: animation 0.2s ease infinite;
+    margin-top: 20%;
 }
 
 @keyframes animation {

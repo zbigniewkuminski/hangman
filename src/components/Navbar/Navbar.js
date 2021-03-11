@@ -73,8 +73,8 @@ generateCorrectLanguageDescriptions() {
       )()
     }
   </div>
-   <div className="col-md-1">
-    <span className="authors-button">ZBYDAN</span>
+   <div className="authors-animation-container col-md-1">
+    <span className="authors">ZBYDAN</span>
    </div>
 </div>
 )}

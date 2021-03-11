@@ -23,7 +23,7 @@
   align-items: center;
 }
 
-.authors-button {
+.authors {
   animation: animation 0.2s ease infinite;
 }
 
@@ -45,4 +45,8 @@
   100% {
     color: white;
   }
+}
+
+.authors-animation-container {
+  align-self: center;
 }
