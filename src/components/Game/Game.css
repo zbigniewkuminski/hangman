@@ -27,12 +27,17 @@ h3 {
     font-size: 18px !important;
 }
 
-.keyboard-button {
+.keyboard-button, .keyboard-button-highlight-disabled {
     width: 45px;
     height: 45px;
     margin: 3px;
     border: none;
     border-radius: 10px;
+}
+
+.keyboard-button-highlight-disabled:hover {
+    cursor: pointer;
+    background-color: #EFEFEF4D;
 }
 
 button:hover {
@@ -75,3 +80,4 @@ button:hover {
 .add-player-to-scoreboard {
     margin: auto;
 }
+

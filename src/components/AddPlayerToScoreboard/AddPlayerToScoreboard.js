@@ -121,7 +121,7 @@ class AddPlayerToScoreboard extends React.Component {
                     <div className="score">{this.props.languageVersion.scoredDescription} {this.props.playerScore} {this.props.languageVersion.ptsDescription}</div>
                   </div>
                   <div className="row justify-content-center">
-                    <button className="button-save" disabled={!this.state.newPlayerName.trim()} onClick={() => { this.prepareToSave() }}>{this.props.languageVersion.saveDescription}</button>
+                    <button className={"button-save " + (!this.state.newPlayerName.trim() ? "save-button-highlight-disabled " : "")} disabled={!this.state.newPlayerName.trim()} onClick={() => { this.prepareToSave() }}>{this.props.languageVersion.saveDescription}</button>
                   </div>
                 </div>
               )

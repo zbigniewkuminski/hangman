@@ -179,7 +179,7 @@ class Game extends React.Component {
                 {this.state.languageVersion.pickLetterDescription} <br /> </div>
               {
                 this.state.languageVersion.lettersToPick.map((letter, index) => {
-                  return <button className="keyboard-button" disabled={this.errorCounter >= 9} key={letter} onClick={() => { this.pickLetter(letter, index) }}>{letter}</button>
+                  return <button className={"keyboard-button " + (this.errorCounter >= 9 ? "keyboard-button-highlight-disabled " : "")} disabled={this.errorCounter >= 9} key={letter} onClick={() => { this.pickLetter(letter, index) }}>{letter}</button>
                 })
               }
             </div>
