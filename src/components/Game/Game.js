@@ -17,9 +17,9 @@ class Game extends React.Component {
   score = 0;
   errorCounter = 0;
   puzzleDiscovered = false;
-  videoId = 'FBjYUCRDaGY';
-  winVideoId = 'E-XoZAlEDkY';
-  lostVideoId = 'RHYOZaQuqtM';
+  videoId = 'koeObMIFBjg';
+  winVideoId = '3uQPzFFlwpE';
+  lostVideoId = 'jNk6_4jMHW0';
   requestSend = false;
 
   hiddenLetterReveal(letter) {
@@ -56,7 +56,6 @@ class Game extends React.Component {
     else {
       this.displayedWord = tempString;
     }
-    console.log(this.secretWord)
   }
 
   randomIndex(min, max) {
