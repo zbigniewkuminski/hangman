@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css";
+import "./App.scss";
 import MainPage from "./components/MainPage/MainPage";
 import Game from "./components/Game/Game";
 import AuthorsPage from "./components/AuthorsPage/AuthorsPage";
