@@ -1,5 +1,5 @@
 import React from "react";
-import "./AddPlayerToScoreboard.css";
+import "./AddPlayerToScoreboard.scss";
 
 class AddPlayerToScoreboard extends React.Component {
   state = {

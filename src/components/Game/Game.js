@@ -1,5 +1,5 @@
 import React from 'react';
-import './Game.css';
+import './Game.scss';
 import YouTube from 'react-youtube';
 import AddPlayerToScoreboard from '../AddPlayerToScoreboard/AddPlayerToScoreboard';
 let randomWords = require('random-words');
