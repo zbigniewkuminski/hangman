@@ -17,7 +17,7 @@ class Game extends React.Component {
   score = 0;
   errorCounter = 0;
   puzzleDiscovered = false;
-  videoId = 'FBjYUCRDaGY';
+  videoId = 'koeObMIFBjg';
   winVideoId = '3uQPzFFlwpE';
   lostVideoId = 'jNk6_4jMHW0';
   requestSend = false;
