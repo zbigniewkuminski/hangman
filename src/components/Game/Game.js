@@ -17,7 +17,7 @@ class Game extends React.Component {
   score = 0;
   errorCounter = 0;
   puzzleDiscovered = false;
-  videoId = 'koeObMIFBjg';
+  videoId = 'wTm-WFM0v-g';
   winVideoId = '3uQPzFFlwpE';
   lostVideoId = 'jNk6_4jMHW0';
   requestSend = false;
@@ -78,10 +78,11 @@ class Game extends React.Component {
     tempState.languageVersion.usedLetters.push(letter);
     this.setState(tempState);
     // eslint-disable-next-line no-undef
+    console.log(this.secretWord)
   }
 
   gameReset = (puzzleSolved) => {
-    this.videoId = 'FBjYUCRDaGY';
+    this.videoId = 'wTm-WFM0v-g';
 
     this.errorCounter = 0;
 
