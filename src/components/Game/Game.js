@@ -1,5 +1,5 @@
 import React from 'react';
-import './Game.css';
+import './Game.scss';
 import YouTube from 'react-youtube';
 import AddPlayerToScoreboard from '../AddPlayerToScoreboard/AddPlayerToScoreboard';
 let randomWords = require('random-words');
@@ -17,9 +17,9 @@ class Game extends React.Component {
   score = 0;
   errorCounter = 0;
   puzzleDiscovered = false;
-  videoId = 'FBjYUCRDaGY';
-  winVideoId = 'E-XoZAlEDkY';
-  lostVideoId = 'RHYOZaQuqtM';
+  videoId = 'wTm-WFM0v-g';
+  winVideoId = '3uQPzFFlwpE';
+  lostVideoId = 'jNk6_4jMHW0';
   requestSend = false;
 
   hiddenLetterReveal(letter) {
@@ -56,7 +56,6 @@ class Game extends React.Component {
     else {
       this.displayedWord = tempString;
     }
-    console.log(this.secretWord)
   }
 
   randomIndex(min, max) {
@@ -79,10 +78,11 @@ class Game extends React.Component {
     tempState.languageVersion.usedLetters.push(letter);
     this.setState(tempState);
     // eslint-disable-next-line no-undef
+    console.log(this.secretWord)
   }
 
   gameReset = (puzzleSolved) => {
-    this.videoId = 'FBjYUCRDaGY';
+    this.videoId = 'wTm-WFM0v-g';
 
     this.errorCounter = 0;
 

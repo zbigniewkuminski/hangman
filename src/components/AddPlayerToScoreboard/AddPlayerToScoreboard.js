@@ -1,11 +1,12 @@
 import React from "react";
-import "./AddPlayerToScoreboard.css";
+import "./AddPlayerToScoreboard.scss";
 
 class AddPlayerToScoreboard extends React.Component {
   state = {
     topScores: [],
-    newPlayerName: ''
-  };
+    newPlayerName: '',
+    scoreHasBeenSubmitted: false
+  }
 
 
   handleNewPlayerName = (event) => {
@@ -44,7 +45,7 @@ class AddPlayerToScoreboard extends React.Component {
     let requestOption = { method: 'PUT', body: JSON.stringify(updatedScoreboard), headers: { 'Content-Type': 'text/plain' } };
     await fetch('https://hangman2077-55a3b-default-rtdb.europe-west1.firebasedatabase.app/scores/.json', requestOption);
     this.setState({ topScores: updatedScoreboard });
-    this.props.gameReset(this.props.puzzleDiscovered);
+    this.setState({scoreHasBeenSubmitted:true});
   }
 
   updateScoresList(unsortedScores, newScore) {
@@ -113,7 +114,7 @@ class AddPlayerToScoreboard extends React.Component {
             }
           })()}
           {(() => {
-            if (this.props.showNameInput && this.checkIsNewScoreInTop10()) {
+            if (this.props.showNameInput && this.checkIsNewScoreInTop10() && !this.state.scoreHasBeenSubmitted) {
               return (
                 <div className="mt-3">
                   <div className="row justify-content-center">

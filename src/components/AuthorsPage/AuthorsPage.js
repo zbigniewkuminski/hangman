@@ -1,6 +1,6 @@
 import React from 'react';
 import YouTube from 'react-youtube';
-import "./AuthorsPage.css";
+import "./AuthorsPage.scss";
 
 
 class AuthorsPage extends React.Component {
