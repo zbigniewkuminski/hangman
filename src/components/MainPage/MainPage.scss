@@ -30,6 +30,9 @@
     margin: 10px;
     cursor: pointer;
     font-size: 14px;
+    &:hover {
+        background-color: lightyellow;
+    }
 }
 
 .open-animation {
@@ -48,10 +51,6 @@
     transition: all .3s ease-in-out;
     animation-fill-mode: forwards;
  }
-
-.language-button:hover {
-    background-color: lightyellow;
-}
 
 .button:hover {
     background-color: lightyellow;
