@@ -61,16 +61,15 @@ button:hover {
     border: none;
     border-radius: 10px;
     cursor: pointer;
+    &:hover {
+        background-color: lightyellow;
+    }
 }
 
 .open-animation {
     animation: appear-animation 5s;
     transition: all 0.3s ease-in-out;
     animation-fill-mode: both;
-}
-
-.button-start-reset:hover {
-    background-color: lightyellow;
 }
 
 .displayed-word {
@@ -80,4 +79,3 @@ button:hover {
 .add-player-to-scoreboard {
     margin: auto;
 }
-
