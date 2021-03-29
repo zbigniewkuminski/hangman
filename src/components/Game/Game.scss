@@ -35,7 +35,19 @@ h3 {
     border-radius: 10px;
 }
 
-.keyboard-button-highlight-disabled:hover {
+.button-start-reset, .button-start-reset-disabled {
+    min-width: 150px;
+    height: 50px;
+    margin: 5px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    &:hover {
+        background-color: lightyellow;
+    }
+}
+
+.keyboard-button-highlight-disabled:hover, .button-start-reset-disabled:hover {
     cursor: pointer;
     background-color: #EFEFEF4D;
 }
@@ -51,18 +63,6 @@ button:hover {
     }
     to {
         opacity: 1;
-    }
-}
-
-.button-start-reset {
-    min-width: 150px;
-    height: 50px;
-    margin: 5px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    &:hover {
-        background-color: lightyellow;
     }
 }
 
