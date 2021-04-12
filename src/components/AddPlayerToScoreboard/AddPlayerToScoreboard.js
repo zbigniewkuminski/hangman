@@ -74,7 +74,7 @@ class AddPlayerToScoreboard extends React.Component {
   }
 
   checkIsNewScoreInTop10() {
-    return this.state.topScores.length < 10 || this.state.topScores[9].score < this.props.playerScore ? true : false;
+    return this.props.playerScore > 0 && (this.state.topScores.length < 10 || this.state.topScores[9].score < this.props.playerScore) ? true : false;
   }
 
   render() {
@@ -114,7 +114,7 @@ class AddPlayerToScoreboard extends React.Component {
             }
           })()}
           {(() => {
-            if (this.props.showNameInput && this.checkIsNewScoreInTop10() && !this.state.scoreHasBeenSubmitted) {
+            if (this.props.showNameInput && this.checkIsNewScoreInTop10() && !this.state.scoreHasBeenSubmitted ) {
               return (
                 <div className="mt-3">
                   <div className="row justify-content-center">
