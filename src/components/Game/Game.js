@@ -103,7 +103,29 @@ class Game extends React.Component {
     var tempState = this.state;
     tempState.showModal = !this.state.showModal;
     this.setState(tempState);
-  };
+  }
+
+  finishGame = (puzzleSolved) => {
+    this.errorCounter = 9;
+    this.puzzleDiscovered = false;
+    this.displayedWord = this.secretWord;
+    this.videoId = this.lostVideoId;
+    this.scoreboardDisplay();
+    this.generateWord();
+    if (!puzzleSolved) {
+      this.score = 0;
+    }
+    this.puzzleDiscovered = false;
+  }
+
+  componentWillMount() {
+    this.props.history.listen((location,action) => {
+    setTimeout(()=>{
+      this.generateWord();
+      this.languageVersionSet()}, 200);
+      this.gameReset();
+    });
+}
 
   languageVersionSet() {
     switch (this.props.location.pathname) {
@@ -223,24 +245,9 @@ class Game extends React.Component {
             </div>
           </div>
           <div className="row justify-content-center mt-4">
-            <button
-              className="button-start-reset"
-              onClick={() => {
-                this.gameReset(this.puzzleDiscovered ? true : false);
-              }}
-            >
-              {this.puzzleDiscovered
-                ? this.state.languageVersion.randomNewWordDescription
-                : "Reset"}
-            </button>
-            <button
-              className="button-start-reset"
-              onClick={() => {
-                this.scoreboardDisplay();
-              }}
-            >
-              {this.state.languageVersion.scoreboard?.scoreboardDescription}
-            </button>
+            <button className="button-start-reset" onClick={() => { this.gameReset(this.puzzleDiscovered ? true : false)}}>{this.puzzleDiscovered ? this.state.languageVersion.randomNewWordDescription : this.state.languageVersion.newGameDescription }</button>
+            <button className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>{this.state.languageVersion.scoreboard?.scoreboardDescription}</button>
+            <button className={"button-start-reset " + (this.errorCounter >= 9 ? "keyboard-button-highlight-disabled " : "")} disabled={this.errorCounter >= 9} onClick={() => { this.finishGame(true) }}>{this.state.languageVersion.endgameDescription}</button>
           </div>
         </div>
         <YouTube videoId={this.videoId} opts={opts} onReady={this._onReady} />
@@ -281,6 +288,8 @@ class LanguageVersion {
       scoreDescription: 'Score',
       authorsDescription: 'Authors',
       randomNewWordDescription: 'Random new word',
+      endgameDescription: 'Finish game',
+      newGameDescription: 'New game',
       scoreboard: {
         scoreboardDescription: 'Scoreboard',
         typeNameDescription: 'Enter name',
@@ -299,6 +308,8 @@ class LanguageVersion {
       scoreDescription: 'Wynik',
       authorsDescription: 'Autorzy',
       randomNewWordDescription: 'Losuj nowe słowo',
+      endgameDescription: 'Koniec gry',
+      newGameDescription: 'Nowa gra',
       scoreboard: {
         scoreboardDescription: 'Tablica wyników',
         typeNameDescription: 'Wpisz imię',

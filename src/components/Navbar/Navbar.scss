@@ -9,6 +9,9 @@
   height: 51px;
   width: 160px;
   border-radius: 6px;
+  &:hover{
+    background-color: lightyellow;
+  }
 }
 
 .dropdown-button {
@@ -21,18 +24,13 @@
   border-radius: 6px;
   margin-top: 0px;
   align-items: center;
+  &:hover {
+    background-color: lightyellow;
+  }
 }
 
 .authors {
   animation: animation 0.2s ease infinite;
-}
-
-.navbar-button:hover {
-  background-color: lightyellow;
-}
-
-.dropdown-button:hover {
-  background-color: lightyellow;
 }
 
 @keyframes animation {
