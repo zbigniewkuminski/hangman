@@ -1,62 +1,67 @@
-import React from 'react';
-import './Game.scss';
+import React from "react";
+import "./TimeGame.scss";
 import YouTube from 'react-youtube';
 import AddPlayerToScoreboard from '../AddPlayerToScoreboard/AddPlayerToScoreboard';
 let randomWords = require('random-words');
 
-class Game extends React.Component {
+class GameTimer extends React.Component {
   state = {
     languageVersion: {
       lettersToPick: [],
       usedLetters: [],
     },
     showModal: false,
-  };
-  secretWord = "";
-  displayedWord = "";
+  }
+  secretWord = '';
+  displayedWord = '';
   score = 0;
-  errorCounter = 0;
   puzzleDiscovered = false;
-  videoId = "wTm-WFM0v-g";
-  winVideoId = "3uQPzFFlwpE";
-  lostVideoId = "jNk6_4jMHW0";
+  videoId = 'wTm-WFM0v-g';
+  winVideoId = '3uQPzFFlwpE';
+  lostVideoId = 'jNk6_4jMHW0';
+  timeGlobal = 90;
+  counter;
+
+  counterFunction() {
+    return setInterval(() => {
+      if (this.timeGlobal >= 1) {
+        this.setState({ time: this.timeGlobal-- });
+      } else {
+        this.scoreboardDisplay();
+        clearInterval(this.counter);
+      }
+    }, 1000);
+  };
 
   hiddenLetterReveal(letter) {
-    let tempString = "";
+    let tempString = '';
     let foundLetterCounter = 0;
     for (let i = 0; i < this.secretWord.length; i++) {
       if (this.secretWord[i] === letter) {
         foundLetterCounter++;
         tempString += letter;
       }
-      if (this.displayedWord[i] !== "*") {
+      if (this.displayedWord[i] !== '*') {
         tempString += this.displayedWord[i];
       }
-      if (this.secretWord[i] !== letter && this.displayedWord[i] === "*") {
-        tempString += "*";
+      if (this.secretWord[i] !== letter && this.displayedWord[i] === '*') {
+        tempString += '*';
       }
     }
     this.score += foundLetterCounter;
-    if (tempString === this.secretWord) {
-      // WIN- SECRET WORD KNOWN
+    if (tempString === this.secretWord) { // WIN- SECRET WORD KNOWN
       this.score = this.score + this.secretWord.length * 2;
-      this.errorCounter = 10;
       this.videoId = this.winVideoId;
       this.puzzleDiscovered = true;
+      this.timeGlobal = this.timeGlobal + 45;
+      this.gameReset(this.puzzleDiscovered);
+      return;
     }
     if (foundLetterCounter === 0) {
       // MISTAKE
-      this.errorCounter++;
+      this.timeGlobal -= 5;
     }
-    if (this.errorCounter === 9) {
-      // LOST GAME
-      this.puzzleDiscovered = false;
-      this.displayedWord = this.secretWord;
-      this.videoId = this.lostVideoId;
-      this.scoreboardDisplay();
-    } else {
-      this.displayedWord = tempString;
-    }
+    this.displayedWord = tempString;
   }
 
   randomIndex(min, max) {
@@ -67,11 +72,7 @@ class Game extends React.Component {
 
   async getPolishWord() {
     var wordIndex = this.randomIndex(0, 93475);
-    const response = await fetch(
-      "https://hangman2077-polish-dictionary-default-rtdb.europe-west1.firebasedatabase.app/dictionary/" +
-        wordIndex +
-        ".json"
-    );
+    const response = await fetch('https://hangman2077-polish-dictionary-default-rtdb.europe-west1.firebasedatabase.app/dictionary/' + wordIndex + '.json');
     const data = await response.json();
     return data;
   }
@@ -81,82 +82,99 @@ class Game extends React.Component {
     this.hiddenLetterReveal(letter);
     tempState.languageVersion.lettersToPick.splice(index, 1);
     tempState.languageVersion.usedLetters.push(letter);
+    console.log(this.secretWord);
     this.setState(tempState);
     // eslint-disable-next-line no-undef
-    console.log(this.secretWord);
   }
 
+  chnagingImageLogic() {
+   if(this.timeGlobal > 90 ){
+     return 0;
+   }
+   else if (this.timeGlobal === 0) {
+     this.videoId = this.lostVideoId;
+     return 9;
+   }
+   return Math.floor((90-this.timeGlobal)/12);
+  }
+
+
   gameReset = (puzzleSolved) => {
-    this.videoId = "wTm-WFM0v-g";
-
-    this.errorCounter = 0;
-
     this.generateWord();
 
     if (!puzzleSolved) {
       this.score = 0;
+      this.resetCounter();
+      return;
     }
     this.puzzleDiscovered = false;
-  };
+  }
 
   scoreboardDisplay = () => {
     var tempState = this.state;
     tempState.showModal = !this.state.showModal;
     this.setState(tempState);
-  };
+  }
 
   languageVersionSet() {
     switch (this.props.location.pathname) {
-      case "/pl/game":
-        const tempPolishVersion = new LanguageVersion("polish");
+      case '/pl/game':
+        const tempPolishVersion = new LanguageVersion('polish');
         this.setState({ languageVersion: tempPolishVersion.language });
         break;
-      case "/en/game":
-        const tempEnglishVersion = new LanguageVersion("english");
+      case '/en/game':
+        const tempEnglishVersion = new LanguageVersion('english');
         this.setState({ languageVersion: tempEnglishVersion.language });
         break;
-      default:
+        default:
         break;
-    }
-  }
+          }
+        }
 
   componentDidMount() {
     this.props.history.listen((location, action) => {
       setTimeout(() => {
-        this.generateWord();
-        this.languageVersionSet();
+        this.languageVersionSet()
+        this.resetCounter();
+        this.gameReset();
       }, 200);
-      this.gameReset();
     });
     this.generateWord();
     this.languageVersionSet();
+    this.resetCounter();
+  }
+
+  resetCounter() {
+    clearInterval(this.counter);
+    this.timeGlobal = 90;
+    this.counter = this.counterFunction();
   }
 
   generateWord() {
     switch (this.props.location.pathname) {
-      case "/pl/game":
+      case '/pl/timegame':
         this.getPolishWord().then((result) => {
           this.secretWord = result.toUpperCase();
-          this.displayedWord = this.secretWord.replace(/./g, "*");
-          const tempPolishVersion = new LanguageVersion("polish");
+          this.displayedWord = this.secretWord.replace(/./g, '*');
+          const tempPolishVersion = new LanguageVersion('polish');
           this.setState({ languageVersion: tempPolishVersion.language });
         });
         break;
-      case "/en/game":
-        this.secretWord = randomWords().toUpperCase();
-        this.displayedWord = this.secretWord.replace(/./g, "*");
-        const tempEnglishVersion = new LanguageVersion("english");
-        this.setState({ languageVersion: tempEnglishVersion.language });
-        break;
-      default:
-        break;
+      case '/en/timegame':
+          this.secretWord = randomWords().toUpperCase();
+          this.displayedWord = this.secretWord.replace(/./g, '*');
+          const tempEnglishVersion = new LanguageVersion('english');
+          this.setState({ languageVersion: tempEnglishVersion.language });
+          break;
+          default:
+          break;
     }
   }
 
   getGameHtml() {
     const opts = {
-      height: "0",
-      width: "0",
+      height: '0',
+      width: '0',
       playerVars: {
         autoplay: 1,
       },
@@ -165,109 +183,70 @@ class Game extends React.Component {
     return (
       <div className="game open-animation">
         <div className="header mt-4 mb-4">
-          <h3>{this.state.languageVersion.description}</h3>
-          <h1 className="displayed-word">{this.displayedWord}</h1>
+          <h3>
+            {this.state.languageVersion.description}
+          </h3>
+          <h1 className="displayed-word">
+            {this.displayedWord}
+          </h1>
           <div className="mb-3">
-            <img
-              className="game-state-image"
-              src={require("./../../assets/hangman" +
-                this.errorCounter +
-                ".png")}
-              alt="test"
-            ></img>
+            <img className="game-state-image" src={require('./../../assets/hangman' + this.chnagingImageLogic() + '.png')} alt="test"></img>
           </div>
         </div>
         <div>
           <div className="row justify-content-center">
             <div className="col-md-7 col-sm-12">
               <div className="header">
-                {this.state.languageVersion.pickLetterDescription} <br />{" "}
-              </div>
-              {this.state.languageVersion.lettersToPick.map((letter, index) => {
-                return (
-                  <button
-                    className={
-                      "keyboard-button " +
-                      (this.errorCounter >= 9
-                        ? "keyboard-button-highlight-disabled "
-                        : "")
-                    }
-                    disabled={this.errorCounter >= 9}
-                    key={letter}
-                    onClick={() => {
-                      this.pickLetter(letter, index);
-                    }}
-                  >
-                    {letter}
-                  </button>
-                );
-              })}
+                {this.state.languageVersion.pickLetterDescription} <br /> </div>
+              {
+                this.state.languageVersion.lettersToPick.map((letter, index) => {
+                  return <button className={"keyboard-button " + (this.timeGlobal === 0 ? "keyboard-button-highlight-disabled " : "")} disabled={this.timeGlobal === 0} key={letter} onClick={() => { this.pickLetter(letter, index) }}>{letter}</button>
+                })
+              }
             </div>
             <div className="col-md-5 col-sm-12">
-              <div className="header">
-                {this.state.languageVersion.usedLettersDescription} <br />
-              </div>
+              <div className="header">{this.state.languageVersion.usedLettersDescription} <br /></div>
               <div className="row justify-content-center">
-                {this.state.languageVersion.usedLetters.map((letter) => {
-                  return (
-                    <div className="mr-1" key={letter}>
-                      {letter}
-                    </div>
-                  );
-                })}
-                <div className="header">
-                  {this.state.languageVersion.scoreDescription}: {this.score}
-                  <br />
-                </div>
+                {
+                  this.state.languageVersion.usedLetters.map((letter) => {
+                    return <div className="mr-1" key={letter}>{letter}</div>
+                  })
+                }
+              </div>
+              <div className="game-timer">
+              {this.state.languageVersion.timeRemained + ' ' + this.timeGlobal}
+              </div>
+              <div>
+                <div className="header">{this.state.languageVersion.scoreDescription}: {this.score}<br /></div>
               </div>
             </div>
           </div>
           <div className="row justify-content-center mt-4">
-            <button
-              className="button-start-reset"
-              onClick={() => {
-                this.gameReset(this.puzzleDiscovered ? true : false);
-              }}
-            >
-              {this.puzzleDiscovered
-                ? this.state.languageVersion.randomNewWordDescription
-                : "Reset"}
-            </button>
-            <button
-              className="button-start-reset"
-              onClick={() => {
-                this.scoreboardDisplay();
-              }}
-            >
-              {this.state.languageVersion.scoreboard?.scoreboardDescription}
-            </button>
+            <button className="button-start-reset" onClick={() => { this.gameReset(this.puzzleDiscovered ? true : false)}}>{this.puzzleDiscovered ? this.state.languageVersion.randomNewWordDescription : 'Reset'}</button>
+            <button className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>{this.state.languageVersion.scoreboard?.scoreboardDescription}</button>
           </div>
         </div>
         <YouTube videoId={this.videoId} opts={opts} onReady={this._onReady} />
-        {this.state.showModal ? (
-          <AddPlayerToScoreboard
-            className="add-player-to-scoreboard"
+        {
+          this.state.showModal ? (<AddPlayerToScoreboard className="add-player-to-scoreboard"
             scoreboardDisplay={this.scoreboardDisplay}
             gameReset={this.gameReset}
             puzzleDiscovered={this.puzzleDiscovered ? true : false}
             playerScore={this.score}
             languageVersion={this.state.languageVersion.scoreboard}
-            showNameInput={this.errorCounter === 9 ? true : false}
-          />
-        ) : (
-          <div></div>
-        )}
-        <div className="footer"></div>
-      </div>
-    );
+            showNameInput={this.errorCounter === 9 ? true : false} />) : (<div></div>)
+        }
+        <div className="footer">
+        </div>
+      </div>)
   }
 
   render() {
-    return this.getGameHtml();
+    return (this.getGameHtml());
   }
 }
 
-export default Game;
+export default GameTimer;
 
 
 class LanguageVersion {
@@ -281,6 +260,7 @@ class LanguageVersion {
       scoreDescription: 'Score',
       authorsDescription: 'Authors',
       randomNewWordDescription: 'Random new word',
+      timeRemained: 'Time remained',
       scoreboard: {
         scoreboardDescription: 'Scoreboard',
         typeNameDescription: 'Enter name',
@@ -299,6 +279,7 @@ class LanguageVersion {
       scoreDescription: 'Wynik',
       authorsDescription: 'Autorzy',
       randomNewWordDescription: 'Losuj nowe słowo',
+      timeRemained: 'Pozostaly czas',
       scoreboard: {
         scoreboardDescription: 'Tablica wyników',
         typeNameDescription: 'Wpisz imię',
@@ -315,3 +296,4 @@ class LanguageVersion {
     this.language = this.languagesContainer[selectedLanguage];
   }
 }
+
