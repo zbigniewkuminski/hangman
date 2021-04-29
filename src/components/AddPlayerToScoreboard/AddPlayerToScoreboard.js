@@ -27,7 +27,9 @@ class AddPlayerToScoreboard extends React.Component {
   };
 
   async getScoresFromFireBase() {
-    const response = await fetch('https://hangman2077-55a3b-default-rtdb.europe-west1.firebasedatabase.app/scores/.json');
+    const response = this.props.typeOfGame === 'classicGame'
+      ? await fetch('https://hangman2077-55a3b-default-rtdb.europe-west1.firebasedatabase.app/scores/.json')
+      : await fetch('https://hangman2077-55a3b-default-rtdb.europe-west1.firebasedatabase.app/timeScores/.json');
     const data = await response.json();
     this.setState({ topScores: data ? data : [] });
   }
@@ -43,9 +45,11 @@ class AddPlayerToScoreboard extends React.Component {
     }
     let updatedScoreboard = this.updateScoresList(this.state.topScores, newScore);
     let requestOption = { method: 'PUT', body: JSON.stringify(updatedScoreboard), headers: { 'Content-Type': 'text/plain' } };
-    await fetch('https://hangman2077-55a3b-default-rtdb.europe-west1.firebasedatabase.app/scores/.json', requestOption);
+    this.props.typeOfGame === 'classicGame'
+      ? await fetch('https://hangman2077-55a3b-default-rtdb.europe-west1.firebasedatabase.app/scores/.json', requestOption)
+      : await fetch('https://hangman2077-55a3b-default-rtdb.europe-west1.firebasedatabase.app/timeScores/.json', requestOption);
     this.setState({ topScores: updatedScoreboard });
-    this.setState({scoreHasBeenSubmitted:true});
+    this.setState({ scoreHasBeenSubmitted: true });
   }
 
   updateScoresList(unsortedScores, newScore) {
@@ -85,7 +89,9 @@ class AddPlayerToScoreboard extends React.Component {
             <div className="col-md-1 col-sm-2 col-2"></div>
             <div className="col-md-10 col-sm-8 col-8">
               <h2 className="mt-2 add-player-to-scoreboard-title">
-                {this.props.languageVersion?.scoreboardDescription.toUpperCase()}
+                {this.props.typeOfGame === 'classicGame'
+                  ? this.props.languageVersion?.scoreboardDescription.toUpperCase()
+                  : this.props.languageVersion?.timeScoreboardDescription.toUpperCase()}
               </h2>
             </div>
             <div className="col-md-1 col-sm-2 col-2">
@@ -114,7 +120,7 @@ class AddPlayerToScoreboard extends React.Component {
             }
           })()}
           {(() => {
-            if (this.props.showNameInput && this.checkIsNewScoreInTop10() && !this.state.scoreHasBeenSubmitted ) {
+            if (this.props.showNameInput && this.checkIsNewScoreInTop10() && !this.state.scoreHasBeenSubmitted) {
               return (
                 <div className="mt-3">
                   <div className="row justify-content-center">

@@ -232,7 +232,7 @@ class GameTimer extends React.Component {
           </div>
           <div className="row justify-content-center mt-4">
             <button className="button-start-reset" onClick={() => { this.gameReset(this.puzzleDiscovered)}}>{this.puzzleDiscovered ? this.state.languageVersion.randomNewWordDescription : 'Reset'}</button>
-            <button className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>{this.state.languageVersion.scoreboard?.scoreboardDescription}</button>
+            <button className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>{this.state.languageVersion.scoreboard?.scoreboardButton}</button>
             <button className={"button-start-reset " + (this.timeGlobal === 0 ? "keyboard-button-highlight-disabled " : "")} disabled={this.timeGlobal === 0 } onClick={() => { this.finishTimeGame(true) }}>{this.state.languageVersion.endgameDescription}</button>
           </div>
         </div>
@@ -244,7 +244,8 @@ class GameTimer extends React.Component {
             puzzleDiscovered={this.puzzleDiscovered ? true : false}
             playerScore={this.score}
             languageVersion={this.state.languageVersion.scoreboard}
-            showNameInput={this.timeGlobal === 0 ? true : false} />) : (<div></div>)
+            showNameInput={this.timeGlobal === 0 ? true : false} 
+            typeOfGame="timeGame"/>) : (<div></div>)            
         }
         <div className="footer">
         </div>
@@ -273,7 +274,9 @@ class LanguageVersion {
       endgameDescription: 'Finish game',
       timeRemained: 'Time remained',
       scoreboard: {
-        scoreboardDescription: 'Scoreboard',
+        scoreboardButton: 'Scoreboard',
+        scoreboardDescription: 'Classic game scoreboard',
+        timeScoreboardDescription: 'Time game scoreboard',       
         typeNameDescription: 'Enter name',
         saveDescription: 'Save',
         scoredDescription: 'Scored',
@@ -293,7 +296,9 @@ class LanguageVersion {
       endgameDescription: 'Koniec gry',
       timeRemained: 'Pozostaly czas',
       scoreboard: {
-        scoreboardDescription: 'Tablica wyników',
+        scoreboardButton: 'Tablica wyników',
+        scoreDescription: 'Tablica wyników klasycznych',
+        timeScoreboardDescription: 'Tablica wyników czasowy',
         typeNameDescription: 'Wpisz imię',
         saveDescription: 'Zapisz',
         scoredDescription: 'Osiągnął',

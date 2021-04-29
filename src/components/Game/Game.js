@@ -69,8 +69,8 @@ class Game extends React.Component {
     var wordIndex = this.randomIndex(0, 93475);
     const response = await fetch(
       "https://hangman2077-polish-dictionary-default-rtdb.europe-west1.firebasedatabase.app/dictionary/" +
-        wordIndex +
-        ".json"
+      wordIndex +
+      ".json"
     );
     const data = await response.json();
     return data;
@@ -119,13 +119,14 @@ class Game extends React.Component {
   }
 
   componentWillMount() {
-    this.props.history.listen((location,action) => {
-    setTimeout(()=>{
-      this.generateWord();
-      this.languageVersionSet()}, 200);
+    this.props.history.listen((location, action) => {
+      setTimeout(() => {
+        this.generateWord();
+        this.languageVersionSet()
+      }, 200);
       this.gameReset();
     });
-}
+  }
 
   languageVersionSet() {
     switch (this.props.location.pathname) {
@@ -245,8 +246,8 @@ class Game extends React.Component {
             </div>
           </div>
           <div className="row justify-content-center mt-4">
-            <button className="button-start-reset" onClick={() => { this.gameReset(this.puzzleDiscovered ? true : false)}}>{this.puzzleDiscovered ? this.state.languageVersion.randomNewWordDescription : this.state.languageVersion.newGameDescription }</button>
-            <button className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>{this.state.languageVersion.scoreboard?.scoreboardDescription}</button>
+            <button className="button-start-reset" onClick={() => { this.gameReset(this.puzzleDiscovered ? true : false) }}>{this.puzzleDiscovered ? this.state.languageVersion.randomNewWordDescription : this.state.languageVersion.newGameDescription}</button>
+            <button className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>{this.state.languageVersion.scoreboard?.scoreboardButton}</button>
             <button className={"button-start-reset " + (this.errorCounter >= 9 ? "keyboard-button-highlight-disabled " : "")} disabled={this.errorCounter >= 9} onClick={() => { this.finishGame(true) }}>{this.state.languageVersion.endgameDescription}</button>
           </div>
         </div>
@@ -260,6 +261,7 @@ class Game extends React.Component {
             playerScore={this.score}
             languageVersion={this.state.languageVersion.scoreboard}
             showNameInput={this.errorCounter === 9 ? true : false}
+            typeOfGame="classicGame"
           />
         ) : (
           <div></div>
@@ -291,7 +293,9 @@ class LanguageVersion {
       endgameDescription: 'Finish game',
       newGameDescription: 'New game',
       scoreboard: {
-        scoreboardDescription: 'Scoreboard',
+        scoreboardButton: 'Scoreboard',
+        scoreboardDescription: 'Classic game scoreboard',
+        timeScoreboardDescription: 'Time game scoreboard',
         typeNameDescription: 'Enter name',
         saveDescription: 'Save',
         scoredDescription: 'Scored',
@@ -311,6 +315,9 @@ class LanguageVersion {
       endgameDescription: 'Koniec gry',
       newGameDescription: 'Nowa gra',
       scoreboard: {
+        scoreboardButton: 'Tablica wyników',
+        scoreDescription: 'Tablica wyników klasycznych',
+        timeScoreboardDescription: 'Tablica wyników czasowy',
         scoreboardDescription: 'Tablica wyników',
         typeNameDescription: 'Wpisz imię',
         saveDescription: 'Zapisz',
