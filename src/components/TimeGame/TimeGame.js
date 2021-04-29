@@ -51,7 +51,6 @@ class GameTimer extends React.Component {
     this.score += foundLetterCounter;
     if (tempString === this.secretWord) { // WIN- SECRET WORD KNOWN
       this.score = this.score + this.secretWord.length * 2;
-      this.videoId = this.winVideoId;
       this.puzzleDiscovered = true;
       this.timeGlobal = this.timeGlobal + 45;
       this.gameReset(this.puzzleDiscovered);
@@ -59,7 +58,7 @@ class GameTimer extends React.Component {
     }
     if (foundLetterCounter === 0) {
       // MISTAKE
-      this.timeGlobal -= 5;
+      this.timeGlobal<5 ? this.timeGlobal=0 : this.timeGlobal -=5;
     }
     this.displayedWord = tempString;
   }
@@ -87,7 +86,7 @@ class GameTimer extends React.Component {
     // eslint-disable-next-line no-undef
   }
 
-  chnagingImageLogic() {
+  changingImageLogic() {
    if(this.timeGlobal > 90 ){
      return 0;
    }
@@ -101,6 +100,7 @@ class GameTimer extends React.Component {
 
   gameReset = (puzzleSolved) => {
     this.generateWord();
+    this.videoId = 'wTm-WFM0v-g';
 
     if (!puzzleSolved) {
       this.score = 0;
@@ -108,6 +108,7 @@ class GameTimer extends React.Component {
       return;
     }
     this.puzzleDiscovered = false;
+
   }
 
   scoreboardDisplay = () => {
@@ -161,14 +162,22 @@ class GameTimer extends React.Component {
         });
         break;
       case '/en/timegame':
+        setTimeout(()=>{
           this.secretWord = randomWords().toUpperCase();
           this.displayedWord = this.secretWord.replace(/./g, '*');
           const tempEnglishVersion = new LanguageVersion('english');
           this.setState({ languageVersion: tempEnglishVersion.language });
+        }, 100)
           break;
           default:
           break;
     }
+  }
+
+  finishTimeGame() {
+    clearInterval(this.counter);
+    this.timeGlobal = 0;
+    this.scoreboardDisplay()
   }
 
   getGameHtml() {
@@ -190,7 +199,7 @@ class GameTimer extends React.Component {
             {this.displayedWord}
           </h1>
           <div className="mb-3">
-            <img className="game-state-image" src={require('./../../assets/hangman' + this.chnagingImageLogic() + '.png')} alt="test"></img>
+            <img className="game-state-image" src={require('./../../assets/hangman' + this.changingImageLogic() + '.png')} alt="test"></img>
           </div>
         </div>
         <div>
@@ -222,8 +231,9 @@ class GameTimer extends React.Component {
             </div>
           </div>
           <div className="row justify-content-center mt-4">
-            <button className="button-start-reset" onClick={() => { this.gameReset(this.puzzleDiscovered ? true : false)}}>{this.puzzleDiscovered ? this.state.languageVersion.randomNewWordDescription : 'Reset'}</button>
+            <button className="button-start-reset" onClick={() => { this.gameReset(this.puzzleDiscovered)}}>{this.puzzleDiscovered ? this.state.languageVersion.randomNewWordDescription : 'Reset'}</button>
             <button className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>{this.state.languageVersion.scoreboard?.scoreboardDescription}</button>
+            <button className={"button-start-reset " + (this.timeGlobal === 0 ? "keyboard-button-highlight-disabled " : "")} disabled={this.timeGlobal === 0 } onClick={() => { this.finishTimeGame(true) }}>{this.state.languageVersion.endgameDescription}</button>
           </div>
         </div>
         <YouTube videoId={this.videoId} opts={opts} onReady={this._onReady} />
@@ -234,7 +244,7 @@ class GameTimer extends React.Component {
             puzzleDiscovered={this.puzzleDiscovered ? true : false}
             playerScore={this.score}
             languageVersion={this.state.languageVersion.scoreboard}
-            showNameInput={this.errorCounter === 9 ? true : false} />) : (<div></div>)
+            showNameInput={this.timeGlobal === 0 ? true : false} />) : (<div></div>)
         }
         <div className="footer">
         </div>
@@ -260,6 +270,7 @@ class LanguageVersion {
       scoreDescription: 'Score',
       authorsDescription: 'Authors',
       randomNewWordDescription: 'Random new word',
+      endgameDescription: 'Finish game',
       timeRemained: 'Time remained',
       scoreboard: {
         scoreboardDescription: 'Scoreboard',
@@ -279,6 +290,7 @@ class LanguageVersion {
       scoreDescription: 'Wynik',
       authorsDescription: 'Autorzy',
       randomNewWordDescription: 'Losuj nowe słowo',
+      endgameDescription: 'Koniec gry',
       timeRemained: 'Pozostaly czas',
       scoreboard: {
         scoreboardDescription: 'Tablica wyników',
