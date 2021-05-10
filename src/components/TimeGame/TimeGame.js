@@ -58,7 +58,7 @@ class GameTimer extends React.Component {
     }
     if (foundLetterCounter === 0) {
       // MISTAKE
-      this.timeGlobal<5 ? this.timeGlobal=0 : this.timeGlobal -=5;
+      this.timeGlobal < 5 ? this.timeGlobal = 0 : this.timeGlobal -= 5;
     }
     this.displayedWord = tempString;
   }
@@ -87,14 +87,14 @@ class GameTimer extends React.Component {
   }
 
   changingImageLogic() {
-   if(this.timeGlobal > 90 ){
-     return 0;
-   }
-   else if (this.timeGlobal === 0) {
-     this.videoId = this.lostVideoId;
-     return 9;
-   }
-   return Math.floor((90-this.timeGlobal)/12);
+    if (this.timeGlobal > 90) {
+      return 0;
+    }
+    else if (this.timeGlobal === 0) {
+      this.videoId = this.lostVideoId;
+      return 9;
+    }
+    return Math.floor((90 - this.timeGlobal) / 12);
   }
 
 
@@ -127,10 +127,10 @@ class GameTimer extends React.Component {
         const tempEnglishVersion = new LanguageVersion('english');
         this.setState({ languageVersion: tempEnglishVersion.language });
         break;
-        default:
+      default:
         break;
-          }
-        }
+    }
+  }
 
   componentDidMount() {
     this.props.history.listen((location, action) => {
@@ -162,15 +162,15 @@ class GameTimer extends React.Component {
         });
         break;
       case '/en/timegame':
-        setTimeout(()=>{
+        setTimeout(() => {
           this.secretWord = randomWords().toUpperCase();
           this.displayedWord = this.secretWord.replace(/./g, '*');
           const tempEnglishVersion = new LanguageVersion('english');
           this.setState({ languageVersion: tempEnglishVersion.language });
         }, 100)
-          break;
-          default:
-          break;
+        break;
+      default:
+        break;
     }
   }
 
@@ -190,66 +190,71 @@ class GameTimer extends React.Component {
     };
 
     return (
-      <div className="game open-animation">
-        <div className="header mt-4 mb-4">
-          <h3>
-            {this.state.languageVersion.description}
-          </h3>
-          <h1 className="displayed-word">
-            {this.displayedWord}
-          </h1>
-          <div className="mb-3">
-            <img className="game-state-image" src={require('./../../assets/hangman' + this.changingImageLogic() + '.png')} alt="test"></img>
-          </div>
-        </div>
-        <div>
-          <div className="row justify-content-center">
-            <div className="col-md-7 col-sm-12">
-              <div className="header">
-                {this.state.languageVersion.pickLetterDescription} <br /> </div>
-              {
-                this.state.languageVersion.lettersToPick.map((letter, index) => {
-                  return <button className={"keyboard-button " + (this.timeGlobal === 0 ? "keyboard-button-highlight-disabled " : "")} disabled={this.timeGlobal === 0} key={letter} onClick={() => { this.pickLetter(letter, index) }}>{letter}</button>
-                })
-              }
+      <div>
+        <div className="game open-animation">
+          <div className="header mt-4 mb-4">
+            <h3>
+              {this.state.languageVersion.description}
+            </h3>
+            <h1 className="displayed-word">
+              {this.displayedWord}
+            </h1>
+            <div className="mb-3">
+              <img className="game-state-image" src={require('./../../assets/hangman' + this.changingImageLogic() + '.png')} alt="test"></img>
             </div>
-            <div className="col-md-5 col-sm-12">
-              <div className="header">{this.state.languageVersion.usedLettersDescription} <br /></div>
-              <div className="row justify-content-center">
+          </div>
+          <div>
+            <div className="row justify-content-center">
+              <div className="col-md-7 col-sm-12">
+                <div className="header">
+                  {this.state.languageVersion.pickLetterDescription} <br /> </div>
                 {
-                  this.state.languageVersion.usedLetters.map((letter) => {
-                    return <div className="mr-1" key={letter}>{letter}</div>
+                  this.state.languageVersion.lettersToPick.map((letter, index) => {
+                    return <button className={"keyboard-button " + (this.timeGlobal === 0 ? "keyboard-button-highlight-disabled " : "")} disabled={this.timeGlobal === 0} key={letter} onClick={() => { this.pickLetter(letter, index) }}>{letter}</button>
                   })
                 }
               </div>
-              <div className="game-timer">
-              {this.state.languageVersion.timeRemained + ' ' + this.timeGlobal}
-              </div>
-              <div>
-                <div className="header">{this.state.languageVersion.scoreDescription}: {this.score}<br /></div>
+              <div className="col-md-5 col-sm-12">
+                <div className="header">{this.state.languageVersion.usedLettersDescription} <br /></div>
+                <div className="row justify-content-center">
+                  {
+                    this.state.languageVersion.usedLetters.map((letter) => {
+                      return <div className="mr-1" key={letter}>{letter}</div>
+                    })
+                  }
+                </div>
+                <div className="game-timer">
+                  {this.state.languageVersion.timeRemained + ' ' + this.timeGlobal}
+                </div>
+                <div>
+                  <div className="header">{this.state.languageVersion.scoreDescription}: {this.score}<br /></div>
+                </div>
               </div>
             </div>
+            <div className="row justify-content-center mt-4">
+              <button className="button-start-reset" onClick={() => { this.gameReset(this.puzzleDiscovered) }}>{this.puzzleDiscovered ? this.state.languageVersion.randomNewWordDescription : 'Reset'}</button>
+              <button className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>{this.state.languageVersion.scoreboard?.scoreboardButton}</button>
+              <button className={"button-start-reset " + (this.timeGlobal === 0 ? "keyboard-button-highlight-disabled " : "")} disabled={this.timeGlobal === 0} onClick={() => { this.finishTimeGame(true) }}>{this.state.languageVersion.endgameDescription}</button>
+            </div>
           </div>
-          <div className="row justify-content-center mt-4">
-            <button className="button-start-reset" onClick={() => { this.gameReset(this.puzzleDiscovered)}}>{this.puzzleDiscovered ? this.state.languageVersion.randomNewWordDescription : 'Reset'}</button>
-            <button className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>{this.state.languageVersion.scoreboard?.scoreboardButton}</button>
-            <button className={"button-start-reset " + (this.timeGlobal === 0 ? "keyboard-button-highlight-disabled " : "")} disabled={this.timeGlobal === 0 } onClick={() => { this.finishTimeGame(true) }}>{this.state.languageVersion.endgameDescription}</button>
+          <YouTube videoId={this.videoId} opts={opts} onReady={this._onReady} />
+          <div className="footer">
           </div>
         </div>
-        <YouTube videoId={this.videoId} opts={opts} onReady={this._onReady} />
-        {
-          this.state.showModal ? (<AddPlayerToScoreboard className="add-player-to-scoreboard"
-            scoreboardDisplay={this.scoreboardDisplay}
-            gameReset={this.gameReset}
-            puzzleDiscovered={this.puzzleDiscovered ? true : false}
-            playerScore={this.score}
-            languageVersion={this.state.languageVersion.scoreboard}
-            showNameInput={this.timeGlobal === 0 ? true : false} 
-            typeOfGame="timeGame"/>) : (<div></div>)            
-        }
-        <div className="footer">
+        <div>
+          {
+            this.state.showModal ? (<AddPlayerToScoreboard className="add-player-to-scoreboard"
+              scoreboardDisplay={this.scoreboardDisplay}
+              gameReset={this.gameReset}
+              puzzleDiscovered={this.puzzleDiscovered ? true : false}
+              playerScore={this.score}
+              languageVersion={this.state.languageVersion.scoreboard}
+              showNameInput={this.timeGlobal === 0 ? true : false}
+              typeOfGame="timeGame" />) : (<div></div>)
+          }
         </div>
-      </div>)
+      </div>
+    )
   }
 
   render() {
@@ -276,7 +281,7 @@ class LanguageVersion {
       scoreboard: {
         scoreboardButton: 'Scoreboard',
         scoreboardDescription: 'Classic game scoreboard',
-        timeScoreboardDescription: 'Time game scoreboard',       
+        timeScoreboardDescription: 'Time game scoreboard',
         typeNameDescription: 'Enter name',
         saveDescription: 'Save',
         scoredDescription: 'Scored',
@@ -298,7 +303,7 @@ class LanguageVersion {
       scoreboard: {
         scoreboardButton: 'Tablica wyników',
         scoreDescription: 'Tablica wyników klasycznych',
-        timeScoreboardDescription: 'Tablica wyników czasowy',
+        timeScoreboardDescription: 'Tablica wyników czasowych',
         typeNameDescription: 'Wpisz imię',
         saveDescription: 'Zapisz',
         scoredDescription: 'Osiągnął',

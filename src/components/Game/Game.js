@@ -186,88 +186,93 @@ class Game extends React.Component {
     };
 
     return (
-      <div className="game open-animation">
-        <div className="header mt-4 mb-4">
-          <h3>{this.state.languageVersion.description}</h3>
-          <h1 className="displayed-word">{this.displayedWord}</h1>
-          <div className="mb-3">
-            <img
-              className="game-state-image"
-              src={require("./../../assets/hangman" +
-                this.errorCounter +
-                ".png")}
-              alt="test"
-            ></img>
-          </div>
-        </div>
-        <div>
-          <div className="row justify-content-center">
-            <div className="col-md-7 col-sm-12">
-              <div className="header">
-                {this.state.languageVersion.pickLetterDescription} <br />{" "}
-              </div>
-              {this.state.languageVersion.lettersToPick.map((letter, index) => {
-                return (
-                  <button
-                    className={
-                      "keyboard-button " +
-                      (this.errorCounter >= 9
-                        ? "keyboard-button-highlight-disabled "
-                        : "")
-                    }
-                    disabled={this.errorCounter >= 9}
-                    key={letter}
-                    onClick={() => {
-                      this.pickLetter(letter, index);
-                    }}
-                  >
-                    {letter}
-                  </button>
-                );
-              })}
+      <div>
+        <div className="game open-animation">
+          <div className="header mt-4 mb-4">
+            <h3>{this.state.languageVersion.description}</h3>
+            <h1 className="displayed-word">{this.displayedWord}</h1>
+            <div className="mb-3">
+              <img
+                className="game-state-image"
+                src={require("./../../assets/hangman" +
+                  this.errorCounter +
+                  ".png")}
+                alt="test"
+              ></img>
             </div>
-            <div className="col-md-5 col-sm-12">
-              <div className="header">
-                {this.state.languageVersion.usedLettersDescription} <br />
-              </div>
-              <div className="row justify-content-center">
-                {this.state.languageVersion.usedLetters.map((letter) => {
+          </div>
+          <div>
+            <div className="row justify-content-center">
+              <div className="col-md-7 col-sm-12">
+                <div className="header">
+                  {this.state.languageVersion.pickLetterDescription} <br />{" "}
+                </div>
+                {this.state.languageVersion.lettersToPick.map((letter, index) => {
                   return (
-                    <div className="mr-1" key={letter}>
+                    <button
+                      className={
+                        "keyboard-button " +
+                        (this.errorCounter >= 9
+                          ? "keyboard-button-highlight-disabled "
+                          : "")
+                      }
+                      disabled={this.errorCounter >= 9}
+                      key={letter}
+                      onClick={() => {
+                        this.pickLetter(letter, index);
+                      }}
+                    >
                       {letter}
-                    </div>
+                    </button>
                   );
                 })}
+              </div>
+              <div className="col-md-5 col-sm-12">
                 <div className="header">
-                  {this.state.languageVersion.scoreDescription}: {this.score}
-                  <br />
+                  {this.state.languageVersion.usedLettersDescription} <br />
+                </div>
+                <div className="row justify-content-center">
+                  {this.state.languageVersion.usedLetters.map((letter) => {
+                    return (
+                      <div className="mr-1" key={letter}>
+                        {letter}
+                      </div>
+                    );
+                  })}
+                  <div className="header">
+                    {this.state.languageVersion.scoreDescription}: {this.score}
+                    <br />
+                  </div>
                 </div>
               </div>
             </div>
+            <div className="row justify-content-center mt-4">
+              <button className="button-start-reset" onClick={() => { this.gameReset(this.puzzleDiscovered ? true : false) }}>{this.puzzleDiscovered ? this.state.languageVersion.randomNewWordDescription : this.state.languageVersion.newGameDescription}</button>
+              <button className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>{this.state.languageVersion.scoreboard?.scoreboardButton}</button>
+              <button className={"button-start-reset " + (this.errorCounter >= 9 ? "keyboard-button-highlight-disabled " : "")} disabled={this.errorCounter >= 9} onClick={() => { this.finishGame(true) }}>{this.state.languageVersion.endgameDescription}</button>
+            </div>
           </div>
-          <div className="row justify-content-center mt-4">
-            <button className="button-start-reset" onClick={() => { this.gameReset(this.puzzleDiscovered ? true : false) }}>{this.puzzleDiscovered ? this.state.languageVersion.randomNewWordDescription : this.state.languageVersion.newGameDescription}</button>
-            <button className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>{this.state.languageVersion.scoreboard?.scoreboardButton}</button>
-            <button className={"button-start-reset " + (this.errorCounter >= 9 ? "keyboard-button-highlight-disabled " : "")} disabled={this.errorCounter >= 9} onClick={() => { this.finishGame(true) }}>{this.state.languageVersion.endgameDescription}</button>
-          </div>
+          <YouTube videoId={this.videoId} opts={opts} onReady={this._onReady} />
+          <div className="footer"></div>
         </div>
-        <YouTube videoId={this.videoId} opts={opts} onReady={this._onReady} />
-        {this.state.showModal ? (
-          <AddPlayerToScoreboard
-            className="add-player-to-scoreboard"
-            scoreboardDisplay={this.scoreboardDisplay}
-            gameReset={this.gameReset}
-            puzzleDiscovered={this.puzzleDiscovered ? true : false}
-            playerScore={this.score}
-            languageVersion={this.state.languageVersion.scoreboard}
-            showNameInput={this.errorCounter === 9 ? true : false}
-            typeOfGame="classicGame"
-          />
-        ) : (
-          <div></div>
-        )}
-        <div className="footer"></div>
+        <div>
+          {this.state.showModal ? (
+            <AddPlayerToScoreboard
+              className="add-player-to-scoreboard"
+              scoreboardDisplay={this.scoreboardDisplay}
+              gameReset={this.gameReset}
+              puzzleDiscovered={this.puzzleDiscovered ? true : false}
+              playerScore={this.score}
+              languageVersion={this.state.languageVersion.scoreboard}
+              showNameInput={this.errorCounter === 9 ? true : false}
+              typeOfGame="classicGame"
+            />
+          ) : (
+            <div></div>
+          )}
+        </div>
       </div>
+
     );
   }
 
@@ -317,7 +322,7 @@ class LanguageVersion {
       scoreboard: {
         scoreboardButton: 'Tablica wyników',
         scoreDescription: 'Tablica wyników klasycznych',
-        timeScoreboardDescription: 'Tablica wyników czasowy',
+        timeScoreboardDescription: 'Tablica wyników czasowych',
         scoreboardDescription: 'Tablica wyników',
         typeNameDescription: 'Wpisz imię',
         saveDescription: 'Zapisz',
