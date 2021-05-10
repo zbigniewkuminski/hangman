@@ -239,37 +239,37 @@ class Game extends React.Component {
                     );
                   })}
                 </div>
-                  <div className="header">
-                    {this.state.languageVersion.scoreDescription}: {this.score}
-                    <br />
-                  </div>
+                <div className="header">
+                  {this.state.languageVersion.scoreDescription}: {this.score}
+                  <br />
+                </div>
+              </div>
+              <div className="row justify-content-center mt-4">
+                <button className="button-start-reset" onClick={() => { this.gameReset(this.puzzleDiscovered ? true : false) }}>{this.puzzleDiscovered ? this.state.languageVersion.randomNewWordDescription : this.state.languageVersion.newGameDescription}</button>
+                <button className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>{this.state.languageVersion.scoreboard?.scoreboardButton}</button>
+                <button className={"button-start-reset " + (this.errorCounter >= 9 ? "keyboard-button-highlight-disabled " : "")} disabled={this.errorCounter >= 9} onClick={() => { this.finishGame(true) }}>{this.state.languageVersion.endgameDescription}</button>
+              </div>
             </div>
-            <div className="row justify-content-center mt-4">
-              <button className="button-start-reset" onClick={() => { this.gameReset(this.puzzleDiscovered ? true : false) }}>{this.puzzleDiscovered ? this.state.languageVersion.randomNewWordDescription : this.state.languageVersion.newGameDescription}</button>
-              <button className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>{this.state.languageVersion.scoreboard?.scoreboardButton}</button>
-              <button className={"button-start-reset " + (this.errorCounter >= 9 ? "keyboard-button-highlight-disabled " : "")} disabled={this.errorCounter >= 9} onClick={() => { this.finishGame(true) }}>{this.state.languageVersion.endgameDescription}</button>
-            </div>
+            <YouTube videoId={this.videoId} opts={opts} onReady={this._onReady} />
+            <div className="footer"></div>
           </div>
-          <YouTube videoId={this.videoId} opts={opts} onReady={this._onReady} />
-          <div className="footer"></div>
         </div>
         <div>
-          {this.state.showModal ? (
-            <AddPlayerToScoreboard
-              className="add-player-to-scoreboard"
-              scoreboardDisplay={this.scoreboardDisplay}
-              gameReset={this.gameReset}
-              puzzleDiscovered={this.puzzleDiscovered ? true : false}
-              playerScore={this.score}
-              languageVersion={this.state.languageVersion.scoreboard}
-              showNameInput={this.errorCounter === 9 ? true : false}
-              typeOfGame="classicGame"
-            />
-          ) : (
-            <div></div>
-          )}
-        </div>
-      </div>
+            {this.state.showModal ? (
+              <AddPlayerToScoreboard
+                className="add-player-to-scoreboard"
+                scoreboardDisplay={this.scoreboardDisplay}
+                gameReset={this.gameReset}
+                puzzleDiscovered={this.puzzleDiscovered ? true : false}
+                playerScore={this.score}
+                languageVersion={this.state.languageVersion.scoreboard}
+                showNameInput={this.errorCounter === 9 ? true : false}
+                typeOfGame="classicGame"
+              />
+            ) : (
+              <div></div>
+            )}
+          </div>
       </div>
     );
   }
