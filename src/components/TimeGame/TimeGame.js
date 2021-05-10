@@ -177,6 +177,7 @@ class GameTimer extends React.Component {
   finishTimeGame() {
     clearInterval(this.counter);
     this.timeGlobal = 0;
+    this.displayedWord = this.secretWord;
     this.scoreboardDisplay()
   }
 

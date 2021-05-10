@@ -111,7 +111,6 @@ class Game extends React.Component {
     this.displayedWord = this.secretWord;
     this.videoId = this.lostVideoId;
     this.scoreboardDisplay();
-    this.generateWord();
     if (!puzzleSolved) {
       this.score = 0;
     }
@@ -235,14 +234,14 @@ class Game extends React.Component {
                   return (
                     <div className="mr-1" key={letter}>
                       {letter}
-                    </div>
+                      </div>
                   );
                 })}
+              </div>
                 <div className="header">
                   {this.state.languageVersion.scoreDescription}: {this.score}
                   <br />
                 </div>
-              </div>
             </div>
           </div>
           <div className="row justify-content-center mt-4">

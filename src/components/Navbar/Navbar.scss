@@ -1,6 +1,6 @@
 .navbar-menu {
   position: absolute;
-  z-index: 2;
+  z-index: 1;
 }
 
 .navbar-button {
@@ -24,6 +24,7 @@
   border-radius: 6px;
   margin-top: 0px;
   align-items: center;
+  z-index: 1;
   &:hover {
     background-color: lightyellow;
   }
