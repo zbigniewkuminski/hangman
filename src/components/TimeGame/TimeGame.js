@@ -81,7 +81,6 @@ class GameTimer extends React.Component {
     this.hiddenLetterReveal(letter);
     tempState.languageVersion.lettersToPick.splice(index, 1);
     tempState.languageVersion.usedLetters.push(letter);
-    console.log(this.secretWord);
     this.setState(tempState);
     // eslint-disable-next-line no-undef
   }

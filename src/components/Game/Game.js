@@ -83,7 +83,6 @@ class Game extends React.Component {
     tempState.languageVersion.usedLetters.push(letter);
     this.setState(tempState);
     // eslint-disable-next-line no-undef
-    console.log(this.secretWord);
   }
 
   gameReset = (puzzleSolved) => {
