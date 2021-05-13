@@ -93,8 +93,12 @@ generateCorrectLanguageDescriptions() {
     <button className="navbar-button" onClick={() => {this.props.history.push("/"+this.state.currentLanguage+"/timegame")}}>{this.state.languageVersion.timeGameButtonDescription}</button>{this.hooverDisplayTimeGameOptions()}</div>
 
     <button className="navbar-button" onClick={() => {this.props.history.push("/"+this.state.currentLanguage+"/authors")}}>{this.state.languageVersion.authorsButtonDescription}</button>
-
-    <button className="navbar-button" onClick={() => {this.toggleLanguageHandler(this.state.currentLanguage === 'en' ? 'pl' : 'en')}}>{this.state.languageVersion.languageButtonDescription}</button>
+    {
+      (
+        ()=>{if (this.props.location.pathname.includes('/game') || this.props.location.pathname.includes('/timegame')) {
+         return (<button className="navbar-button" onClick={() => {this.toggleLanguageHandler(this.state.currentLanguage === 'en' ? 'pl' : 'en')}}>{this.state.languageVersion.languageButtonDescription}</button>)}}
+      )()
+    }
   </div>
    <div className="authors-animation-container col-md-1">
     <span className="authors">ZBYDAN</span>
