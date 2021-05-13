@@ -36,7 +36,7 @@ class Navbar extends React.Component {
     }
 
     toggleLanguageHandler(lang) {
-      const currentLocation = this.props.location.pathname.includes('timegame') 
+      this.props.location.pathname.includes('timegame') 
         ? this.toggleLanguageTimeGame(lang)
         : this.toggleLanguage(lang);
     }
