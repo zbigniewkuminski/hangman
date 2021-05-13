@@ -35,10 +35,16 @@ class Navbar extends React.Component {
      }
     }
 
+    toggleLanguageHandler(lang) {
+      const currentLocation = this.props.location.pathname.includes('timegame') 
+        ? this.toggleLanguageTimeGame(lang)
+        : this.toggleLanguage(lang);
+    }
+
   toggleLanguage(lang) {
-        localStorage.setItem('lang', lang);
-        this.props.history.push("/"+lang+"/game");
-        this.setState({currentLanguage: lang});
+      localStorage.setItem('lang', lang);
+      this.props.history.push("/"+lang+"/game");
+      this.setState({currentLanguage: lang});
   }
 
   toggleLanguageTimeGame(lang) {
@@ -88,7 +94,7 @@ generateCorrectLanguageDescriptions() {
 
     <button className="navbar-button" onClick={() => {this.props.history.push("/"+this.state.currentLanguage+"/authors")}}>{this.state.languageVersion.authorsButtonDescription}</button>
 
-    <button className="navbar-button" onClick={() => {this.toggleLanguage(this.state.currentLanguage === 'en' ? 'pl' : 'en')}}>{this.state.languageVersion.languageButtonDescription}</button>
+    <button className="navbar-button" onClick={() => {this.toggleLanguageHandler(this.state.currentLanguage === 'en' ? 'pl' : 'en')}}>{this.state.languageVersion.languageButtonDescription}</button>
   </div>
    <div className="authors-animation-container col-md-1">
     <span className="authors">ZBYDAN</span>
