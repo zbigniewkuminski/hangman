@@ -88,14 +88,14 @@ class AddPlayerToScoreboard extends React.Component {
           <div className="row justify-content-between align-items-center">
             <div className="col-md-1 col-sm-2 col-2"></div>
             <div className="col-md-10 col-sm-8 col-8">
-              <h2 className="mt-2 add-player-to-scoreboard-title">
+              <h2 id="scoreboard-title" className="mt-2 add-player-to-scoreboard-title">
                 {this.props.typeOfGame === 'classicGame'
                   ? this.props.languageVersion?.scoreboardDescription.toUpperCase()
                   : this.props.languageVersion?.timeScoreboardDescription.toUpperCase()}
               </h2>
             </div>
             <div className="col-md-1 col-sm-2 col-2">
-              <button
+              <button id="close-scoreboard-button"
                 className="button pull-right"
                 onClick={() => {
                   this.closeScoreboard();
@@ -122,13 +122,13 @@ class AddPlayerToScoreboard extends React.Component {
           {(() => {
             if (this.props.showNameInput && this.checkIsNewScoreInTop10() && !this.state.scoreHasBeenSubmitted) {
               return (
-                <div className="mt-3">
+                <div id="add-player-section" className="mt-3">
                   <div className="row justify-content-center">
-                    <input className="name-input" value={this.state.newPlayerName} maxLength='20' type='text' onChange={this.handleNewPlayerName} placeholder={this.props.languageVersion.typeNameDescription} />
+                    <input id="player-name-input" className="name-input" value={this.state.newPlayerName} maxLength='20' type='text' onChange={this.handleNewPlayerName} placeholder={this.props.languageVersion.typeNameDescription} />
                     <div className="score">{this.props.languageVersion.scoredDescription} {this.props.playerScore} {this.props.languageVersion.ptsDescription}</div>
                   </div>
                   <div className="row justify-content-center">
-                    <button className={"button-save " + (!this.state.newPlayerName.trim() ? "save-button-highlight-disabled " : "")} disabled={!this.state.newPlayerName.trim()} onClick={() => { this.prepareToSave() }}>{this.props.languageVersion.saveDescription}</button>
+                    <button id="save-score-button" className={"button-save " + (!this.state.newPlayerName.trim() ? "save-button-highlight-disabled " : "")} disabled={!this.state.newPlayerName.trim()} onClick={() => { this.prepareToSave() }}>{this.props.languageVersion.saveDescription}</button>
                   </div>
                 </div>
               )

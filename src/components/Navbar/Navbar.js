@@ -13,10 +13,10 @@ class Navbar extends React.Component {
 
   hooverDisplayGameOptions() {
   if (this.state.hooveredOverGameButton) {
-    return (<div>
-      <button className="dropdown-button"
+    return (<div id="classic-game-dropdown-menu">
+      <button id="classic-game-polish-button" className="dropdown-button"
       onClick={() => {this.toggleLanguage('pl')}}>{this.state.languageVersion.gameDropdownButtons.polishButtonDescription}</button>
-      <button className="dropdown-button"
+      <button id="classic-game-english-button" className="dropdown-button"
       onClick={() => {this.toggleLanguage('en')}}>{this.state.languageVersion.gameDropdownButtons.englishButtonDescription}</button>
       </div>
     )
@@ -25,10 +25,10 @@ class Navbar extends React.Component {
 
   hooverDisplayTimeGameOptions() {
     if (this.state.hooveredOverTimeGameButton) {
-      return (<div>
-        <button className="dropdown-button"
+      return (<div id="time-game-dropdown-menu">
+        <button id="time-game-polish-button" className="dropdown-button"
         onClick={() => {this.toggleLanguageTimeGame('pl')}}>{this.state.languageVersion.gameDropdownButtons.polishButtonDescription}</button>
-        <button className="dropdown-button"
+        <button id="time-game-english-button" className="dropdown-button"
         onClick={() => {this.toggleLanguageTimeGame('en')}}>{this.state.languageVersion.gameDropdownButtons.englishButtonDescription}</button>
         </div>
       )
@@ -80,23 +80,23 @@ generateCorrectLanguageDescriptions() {
     return (
 <div className="navbar-menu row">
   <div className="row col-md-11 justify-content-between">
-    <button className="navbar-button" onClick={() => {this.props.history.push("/"+this.state.currentLanguage+"/mainpage")}}>{this.state.languageVersion.homeButtonDescription}</button>
+    <button id="main-page-button" className="navbar-button" onClick={() => {this.props.history.push("/"+this.state.currentLanguage+"/mainpage")}}>{this.state.languageVersion.homeButtonDescription}</button>
 
     <div
     onMouseEnter = {() => {this.setState({hooveredOverGameButton: true})}}
     onMouseLeave = {() => {this.setState({hooveredOverGameButton: false})}}>
-    <button className="navbar-button" onClick={() => {this.props.history.push("/"+this.state.currentLanguage+"/game")}}>{this.state.languageVersion.gameButtonDescription}</button>{this.hooverDisplayGameOptions()}</div>
+    <button id="classic-game-button" className="navbar-button" onClick={() => {this.props.history.push("/"+this.state.currentLanguage+"/game")}}>{this.state.languageVersion.gameButtonDescription}</button>{this.hooverDisplayGameOptions()}</div>
 
     <div
     onMouseEnter = {() => {this.setState({hooveredOverTimeGameButton: true})}}
     onMouseLeave = {() => {this.setState({hooveredOverTimeGameButton: false})}}>
-    <button className="navbar-button" onClick={() => {this.props.history.push("/"+this.state.currentLanguage+"/timegame")}}>{this.state.languageVersion.timeGameButtonDescription}</button>{this.hooverDisplayTimeGameOptions()}</div>
+    <button id="time-game-button" className="navbar-button" onClick={() => {this.props.history.push("/"+this.state.currentLanguage+"/timegame")}}>{this.state.languageVersion.timeGameButtonDescription}</button>{this.hooverDisplayTimeGameOptions()}</div>
 
-    <button className="navbar-button" onClick={() => {this.props.history.push("/"+this.state.currentLanguage+"/authors")}}>{this.state.languageVersion.authorsButtonDescription}</button>
+    <button id="authors-button" className="navbar-button" onClick={() => {this.props.history.push("/"+this.state.currentLanguage+"/authors")}}>{this.state.languageVersion.authorsButtonDescription}</button>
     {
       (
         ()=>{if (this.props.location.pathname.includes('/game') || this.props.location.pathname.includes('/timegame')) {
-         return (<button className="navbar-button" onClick={() => {this.toggleLanguageHandler(this.state.currentLanguage === 'en' ? 'pl' : 'en')}}>{this.state.languageVersion.languageButtonDescription}</button>)}}
+         return (<button id="toggle-language-button" className="navbar-button" onClick={() => {this.toggleLanguageHandler(this.state.currentLanguage === 'en' ? 'pl' : 'en')}}>{this.state.languageVersion.languageButtonDescription}</button>)}}
       )()
     }
   </div>
