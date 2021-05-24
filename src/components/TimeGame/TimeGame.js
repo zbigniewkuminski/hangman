@@ -100,7 +100,6 @@ class GameTimer extends React.Component {
   gameReset = (puzzleSolved) => {
     this.generateWord();
     this.videoId = 'wTm-WFM0v-g';
-yarn
     if (!puzzleSolved) {
       this.score = 0;
       this.resetCounter();

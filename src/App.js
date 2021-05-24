@@ -11,8 +11,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   return (
     <div className="App">
-      <div className="row justify-content-center">
-        <Navbar />
+      <div id="navbar" className="row justify-content-center">
+        <Navbar/>
       </div>
       <div className="row justify-content-center">
         <Switch>

@@ -23,3 +23,16 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('getNavbar', () => {
+    cy.get('#navbar').should('exist');
+});
+
+Cypress.Commands.add('goToPolishClassicGame', () => {
+    cy.get('#classic-game-button').trigger('mouseover');
+    cy.get('#classic-game-polish-button').trigger('mouseover').click();
+});
+Cypress.Commands.add('goToEnglishClassicGame', () => {
+    cy.get('#classic-game-button').trigger('mouseover');
+    cy.get('#classic-game-english-button').trigger('mouseover').click();
+});
