@@ -135,7 +135,7 @@ class AddPlayerToScoreboard extends React.Component {
             }
             if (this.props.showNameInput && !this.checkIsNewScoreInTop10()) {
               return (<div className="row">
-                <div className="col-md-12 low-score-info">
+                <div id="to-weak-description" className="col-md-12 low-score-info">
                   {this.props.languageVersion.toWeakDescription}
                 </div>
               </div>)
