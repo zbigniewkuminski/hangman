@@ -213,7 +213,7 @@ class AddPlayerToScoreboard extends React.Component {
         <div className="row justify-content-center">
           <div className="scores-displaying-single-element">
             {[...Array(listLength)].map((x, i) => {
-              return <div key={i + indexesSkipped}>{i + indexesSkipped + 1}. </div>;
+              return <div className="unique-scores-displaying-single-element"  key={i + indexesSkipped}>{i + indexesSkipped + 1}. </div>;
             })}
           </div>
           <div className="scores-displaying-single-element">

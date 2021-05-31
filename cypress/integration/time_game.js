@@ -95,6 +95,14 @@ context("Time mode", () => {
       cy.get("#scoreboard-button").click()
       cy.get(".add-player-to-scoreboard").should("exist");
       cy.get("#scoreboard-title").should("have.text", "TABLICA WYNIKÓW CZASOWYCH");
+      cy.get(".first-place").should("exist");
+      cy.get(".podium-first").should("exist");
+      cy.get(".second-place").should("exist");
+      cy.get(".podium-second").should("exist");
+      cy.get(".third-place").should("exist");
+      cy.get(".podium-third").should("exist");
+      cy.get(".unique-scores-displaying-single-element").should("have.length", 7);
+      cy.get("#close-scoreboard-button").click();
     });
 });
 
@@ -193,6 +201,14 @@ context("Time mode", () => {
       cy.get("#scoreboard-button").click()
       cy.get(".add-player-to-scoreboard").should("exist");
       cy.get("#scoreboard-title").should("have.text", "TIME GAME SCOREBOARD");
+      cy.get(".first-place").should("exist");
+      cy.get(".podium-first").should("exist");
+      cy.get(".second-place").should("exist");
+      cy.get(".podium-second").should("exist");
+      cy.get(".third-place").should("exist");
+      cy.get(".podium-third").should("exist");
+      cy.get(".unique-scores-displaying-single-element").should("have.length", 7);
+      cy.get("#close-scoreboard-button").click();
     });
 });
 });
