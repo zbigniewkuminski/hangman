@@ -84,7 +84,7 @@ class AddPlayerToScoreboard extends React.Component {
   render() {
     return (
       <div className="component-background">
-        <div className="add-player-to-scoreboard">
+        <div id="scoreboard" className="add-player-to-scoreboard">
           <div className="row justify-content-between align-items-center">
             <div className="col-md-1 col-sm-2 col-2"></div>
             <div className="col-md-10 col-sm-8 col-8">
@@ -209,7 +209,7 @@ class AddPlayerToScoreboard extends React.Component {
 
   renderScoresList(listLength, indexesSkipped) {
     return (
-      <div className="scores-displaying">
+      <div id="scoreboard-list" className="scores-displaying">
         <div className="row justify-content-center">
           <div className="scores-displaying-single-element">
             {[...Array(listLength)].map((x, i) => {

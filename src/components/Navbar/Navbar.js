@@ -6,7 +6,7 @@ class Navbar extends React.Component {
   state = {
     hooveredOverGameButton: false,
     hooveredOverTimeGameButton: false,
-    currentLanguage: localStorage.getItem("lang"),
+    currentLanguage: this.props.location.pathname.includes('/pl/') ? 'pl' : 'en',
      languageVersion: {
      }
   }
@@ -47,6 +47,10 @@ class Navbar extends React.Component {
       this.setState({currentLanguage: lang});
   }
 
+  setInitialLanguageInLocalStorage() {
+    this.props.location.pathname.includes('/pl/') ? localStorage.setItem('lang', 'pl') : localStorage.setItem('lang', 'en');
+  }
+
   toggleLanguageTimeGame(lang) {
     localStorage.setItem('lang', lang);
     this.props.history.push("/"+lang+"/timegame");
@@ -54,6 +58,7 @@ class Navbar extends React.Component {
 }
 
   componentDidMount() {
+    this.setInitialLanguageInLocalStorage();
     this.generateCorrectLanguageDescriptions();
     this.props.history.listen((location,action) => {
         this.generateCorrectLanguageDescriptions();
