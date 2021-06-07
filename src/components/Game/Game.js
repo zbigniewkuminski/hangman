@@ -191,6 +191,7 @@ class Game extends React.Component {
             <h1 id="displayed-word" className="displayed-word">{this.displayedWord}</h1>
             <div className="mb-3">
               <img
+                id="hangman-image"
                 className="game-state-image"
                 src={require("./../../assets/hangman" +
                   this.errorCounter +
