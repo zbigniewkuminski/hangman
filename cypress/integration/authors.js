@@ -3,11 +3,6 @@
 context("Authors page", () => {
   beforeEach(() => {});
 
-  it("should open hangman main page and check is hangman2077 title displayed on main page", () => {
-    cy.visit("http://localhost:3000/en/mainpage");
-    cy.get("#home-page-title").should("exist");
-  });
-
   it("should check can user access Authors page and check has url changed", () => {
     cy.get("#authors-button").click();
     cy.url().should("eq", "http://localhost:3000/en/authors");

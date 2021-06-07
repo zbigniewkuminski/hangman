@@ -2,11 +2,6 @@
 context('Classic game', () => {
   beforeEach(() => { })
 
-  it('should contain hangman2077 title on main page', () => {
-    cy.visit('http://localhost:3000')
-    cy.get('#home-page-title').should('exist');
-  });
-
   it('should contain polish description', () => {
     cy.goToPolishClassicGame();
     cy.get('#game-description').should('have.text', 'Twoim celem jest uratowanie tego biednego człowieka przed powieszeniem. Możesz dokonać tego odgadując wszystkie ukryte litery. Wybierz litery z tablicy poniżej ale miej na uwadze to że każdy błąd, który popełnisz przybliża tego nieszczęśnika do śmierci. Powodzenia.');

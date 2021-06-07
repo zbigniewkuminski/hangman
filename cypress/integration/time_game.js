@@ -5,11 +5,6 @@ context("Time mode", () => {
     beforeEach(() => {});
     var firstTimeValue = '';
 
-    it("should open hangman main page and check is hangman2077 title displayed on main page", () => {
-      cy.visit("http://localhost:3000/en/mainpage");
-      cy.get("#home-page-title").should("exist");
-    });
-
     it("should check is time mode button and dropdown language buttons menu visible and are they correctly named in polish", () => {
       cy.get("#time-game-button").should('have.text','Time mode');
       cy.get("#time-game-button").trigger('mouseover');
@@ -110,11 +105,6 @@ context("Time mode", () => {
   context("English", () => {
     beforeEach(() => {});
     var firstTimeValue = '';
-
-    it("should open hangman main page and check is hangman2077 title displayed on main page", () => {
-      cy.visit("http://localhost:3000/en/mainpage");
-      cy.get("#home-page-title").should("exist");
-    });
 
     it("should check is time mode button and dropdown language buttons menu visible and are they correctly named in english", () => {
       cy.get("#time-game-button").should('have.text','Time mode');
