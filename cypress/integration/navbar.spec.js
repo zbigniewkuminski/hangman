@@ -3,7 +3,7 @@
 context("Navbar", () => {
     beforeEach(() => {});
 
-    it("hould open hangman main page should check is classic game mode button and dropdown language buttons menu visible and are they correctly named", () => {
+    it("should open hangman main page should check is classic game mode button and dropdown language buttons menu visible and are they correctly named", () => {
         cy.visit("http://localhost:3000/en/mainpage");
         cy.get("#classic-game-button").should('have.text','Classic Game');
         cy.get("#classic-game-button").trigger('mouseover');
