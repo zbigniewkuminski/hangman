@@ -2,12 +2,9 @@
 
 context("Navbar", () => {
     beforeEach(() => {});
-  
-    it("should open hangman main page and check is hangman2077 title displayed on main page", () => {
-        cy.visit("http://localhost:3000/en/mainpage");
-    });
 
-    it("should check is classic game mode button and dropdown language buttons menu visible and are they correctly named", () => {
+    it("hould open hangman main page should check is classic game mode button and dropdown language buttons menu visible and are they correctly named", () => {
+        cy.visit("http://localhost:3000/en/mainpage");
         cy.get("#classic-game-button").should('have.text','Classic Game');
         cy.get("#classic-game-button").trigger('mouseover');
         cy.get("#classic-game-polish-button").should('have.text','Polish');
