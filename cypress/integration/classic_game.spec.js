@@ -16,6 +16,10 @@ context('Classic game', () => {
     cy.url().should('eq', 'http://localhost:3000/pl/game');
   });
 
+  it("should check if hangman graphic displayed in polish", () => {
+    cy.get("#hangman-image").should("exist");
+  });
+
   it('polish classic game uses 35 characters ', () => {
     cy.get('.keyboard-button').should('have.length', 35);
   });
@@ -86,6 +90,10 @@ context('Classic game', () => {
 
   it('check if user is on english classic game page', () => {
     cy.url().should('eq', 'http://localhost:3000/en/game');
+  });
+
+  it("should check if hangman graphic displayed in english", () => {
+    cy.get("#hangman-image").should("exist");
   });
 
   it('english classic game uses 26 characters ', () => {
