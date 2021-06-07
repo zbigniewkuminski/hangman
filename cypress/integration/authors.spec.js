@@ -3,7 +3,8 @@
 context("Authors page", () => {
   beforeEach(() => {});
 
-  it("should check can user access Authors page and check has url changed", () => {
+  it("should open main page and check can user access Authors page and check has url changed", () => {
+    cy.visit("http://localhost:3000/en/mainpage");
     cy.get("#authors-button").click();
     cy.url().should("eq", "http://localhost:3000/en/authors");
   });

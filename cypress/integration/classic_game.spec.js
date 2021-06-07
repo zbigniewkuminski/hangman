@@ -2,11 +2,12 @@
 context('Classic game', () => {
   beforeEach(() => { })
 
-  it('should contain polish description', () => {
+  it('main page and check does view contain polish description', () => {
+    cy.visit("http://localhost:3000/en/mainpage");
     cy.goToPolishClassicGame();
     cy.get('#game-description').should('have.text', 'Twoim celem jest uratowanie tego biednego człowieka przed powieszeniem. Możesz dokonać tego odgadując wszystkie ukryte litery. Wybierz litery z tablicy poniżej ale miej na uwadze to że każdy błąd, który popełnisz przybliża tego nieszczęśnika do śmierci. Powodzenia.');
   });
-  
+
   it('should display hidden word in polish classic game', () => {
     cy.get('#displayed-word').contains('*');
   });

@@ -5,7 +5,8 @@ context("Time mode", () => {
     beforeEach(() => {});
     var firstTimeValue = '';
 
-    it("should check is time mode button and dropdown language buttons menu visible and are they correctly named in polish", () => {
+    it("should open main game and check is time mode button and dropdown language buttons menu visible and are they correctly named in polish", () => {
+      cy.visit("http://localhost:3000/en/mainpage");
       cy.get("#time-game-button").should('have.text','Time mode');
       cy.get("#time-game-button").trigger('mouseover');
       cy.get("#time-game-polish-button").should('have.text','Polish');
@@ -106,7 +107,8 @@ context("Time mode", () => {
     beforeEach(() => {});
     var firstTimeValue = '';
 
-    it("should check is time mode button and dropdown language buttons menu visible and are they correctly named in english", () => {
+    it("should open main game and check is time mode button and dropdown language buttons menu visible and are they correctly named in english", () => {
+      cy.visit("http://localhost:3000/en/mainpage");
       cy.get("#time-game-button").should('have.text','Time mode');
       cy.get("#time-game-button").trigger('mouseover');
       cy.get("#time-game-polish-button").should('have.text','Polish');
