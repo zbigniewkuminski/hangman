@@ -32,7 +32,18 @@ Cypress.Commands.add('goToPolishClassicGame', () => {
     cy.get('#classic-game-button').trigger('mouseover');
     cy.get('#classic-game-polish-button').trigger('mouseover').click();
 });
+
 Cypress.Commands.add('goToEnglishClassicGame', () => {
     cy.get('#classic-game-button').trigger('mouseover');
     cy.get('#classic-game-english-button').trigger('mouseover').click();
+});
+
+Cypress.Commands.add('goToPolishTimeGame', () => {
+    cy.get('#time-game-button').trigger('mouseover');
+    cy.get('#time-game-polish-button').trigger('mouseover').click();
+});
+
+Cypress.Commands.add('goToEnglishTimeGame', () => {
+    cy.get('#time-game-button').trigger('mouseover');
+    cy.get('#time-game-english-button').trigger('mouseover').click();
 });
