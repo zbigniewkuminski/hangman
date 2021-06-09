@@ -187,10 +187,11 @@ class Game extends React.Component {
       <div>
         <div className="game open-animation">
           <div className="header mt-4 mb-4">
-            <h3>{this.state.languageVersion.description}</h3>
-            <h1 className="displayed-word">{this.displayedWord}</h1>
+            <h3 id="game-description">{this.state.languageVersion.description}</h3>
+            <h1 id="displayed-word" className="displayed-word">{this.displayedWord}</h1>
             <div className="mb-3">
               <img
+                id="hangman-image"
                 className="game-state-image"
                 src={require("./../../assets/hangman" +
                   this.errorCounter +
@@ -202,7 +203,7 @@ class Game extends React.Component {
           <div>
             <div className="row justify-content-center">
               <div className="col-md-7 col-sm-12">
-                <div className="header">
+                <div id="pick-letter-header" className="header">
                   {this.state.languageVersion.pickLetterDescription} <br />{" "}
                 </div>
                 {this.state.languageVersion.lettersToPick.map((letter, index) => {
@@ -226,7 +227,7 @@ class Game extends React.Component {
                 })}
               </div>
               <div className="col-md-5 col-sm-12">
-                <div className="header">
+                <div id="used-letter" className="header">
                   {this.state.languageVersion.usedLettersDescription} <br />
                 </div>
                 <div className="row justify-content-center">
@@ -239,14 +240,14 @@ class Game extends React.Component {
                   })}
                 </div>
                 <div className="header">
-                  {this.state.languageVersion.scoreDescription}: {this.score}
+                  <span id="score-label">{this.state.languageVersion.scoreDescription}</span>: {this.score}
                   <br />
                 </div>
               </div>
               <div className="row justify-content-center mt-4">
-                <button className="button-start-reset" onClick={() => { this.gameReset(this.puzzleDiscovered ? true : false) }}>{this.puzzleDiscovered ? this.state.languageVersion.randomNewWordDescription : this.state.languageVersion.newGameDescription}</button>
-                <button className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>{this.state.languageVersion.scoreboard?.scoreboardButton}</button>
-                <button className={"button-start-reset " + (this.errorCounter >= 9 ? "keyboard-button-highlight-disabled " : "")} disabled={this.errorCounter >= 9} onClick={() => { this.finishGame(true) }}>{this.state.languageVersion.endgameDescription}</button>
+                <button id="new-game-button" className="button-start-reset" onClick={() => { this.gameReset(this.puzzleDiscovered ? true : false) }}>{this.puzzleDiscovered ? this.state.languageVersion.randomNewWordDescription : this.state.languageVersion.newGameDescription}</button>
+                <button id="scoreboard-button" className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>{this.state.languageVersion.scoreboard?.scoreboardButton}</button>
+                <button id="finish-game-button" className={"button-start-reset " + (this.errorCounter >= 9 ? "keyboard-button-highlight-disabled " : "")} disabled={this.errorCounter >= 9} onClick={() => { this.finishGame(true) }}>{this.state.languageVersion.endgameDescription}</button>
               </div>
             </div>
             <YouTube videoId={this.videoId} opts={opts} onReady={this._onReady} />

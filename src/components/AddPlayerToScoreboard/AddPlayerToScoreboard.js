@@ -84,18 +84,18 @@ class AddPlayerToScoreboard extends React.Component {
   render() {
     return (
       <div className="component-background">
-        <div className="add-player-to-scoreboard">
+        <div id="scoreboard" className="add-player-to-scoreboard">
           <div className="row justify-content-between align-items-center">
             <div className="col-md-1 col-sm-2 col-2"></div>
             <div className="col-md-10 col-sm-8 col-8">
-              <h2 className="mt-2 add-player-to-scoreboard-title">
+              <h2 id="scoreboard-title" className="mt-2 add-player-to-scoreboard-title">
                 {this.props.typeOfGame === 'classicGame'
                   ? this.props.languageVersion?.scoreboardDescription.toUpperCase()
                   : this.props.languageVersion?.timeScoreboardDescription.toUpperCase()}
               </h2>
             </div>
             <div className="col-md-1 col-sm-2 col-2">
-              <button
+              <button id="close-scoreboard-button"
                 className="button pull-right"
                 onClick={() => {
                   this.closeScoreboard();
@@ -122,20 +122,20 @@ class AddPlayerToScoreboard extends React.Component {
           {(() => {
             if (this.props.showNameInput && this.checkIsNewScoreInTop10() && !this.state.scoreHasBeenSubmitted) {
               return (
-                <div className="mt-3">
+                <div id="add-player-section" className="mt-3">
                   <div className="row justify-content-center">
-                    <input className="name-input" value={this.state.newPlayerName} maxLength='20' type='text' onChange={this.handleNewPlayerName} placeholder={this.props.languageVersion.typeNameDescription} />
+                    <input id="player-name-input" className="name-input" value={this.state.newPlayerName} maxLength='20' type='text' onChange={this.handleNewPlayerName} placeholder={this.props.languageVersion.typeNameDescription} />
                     <div className="score">{this.props.languageVersion.scoredDescription} {this.props.playerScore} {this.props.languageVersion.ptsDescription}</div>
                   </div>
                   <div className="row justify-content-center">
-                    <button className={"button-save " + (!this.state.newPlayerName.trim() ? "save-button-highlight-disabled " : "")} disabled={!this.state.newPlayerName.trim()} onClick={() => { this.prepareToSave() }}>{this.props.languageVersion.saveDescription}</button>
+                    <button id="save-score-button" className={"button-save " + (!this.state.newPlayerName.trim() ? "save-button-highlight-disabled " : "")} disabled={!this.state.newPlayerName.trim()} onClick={() => { this.prepareToSave() }}>{this.props.languageVersion.saveDescription}</button>
                   </div>
                 </div>
               )
             }
             if (this.props.showNameInput && !this.checkIsNewScoreInTop10()) {
               return (<div className="row">
-                <div className="col-md-12 low-score-info">
+                <div id="to-weak-description" className="col-md-12 low-score-info">
                   {this.props.languageVersion.toWeakDescription}
                 </div>
               </div>)
@@ -209,11 +209,11 @@ class AddPlayerToScoreboard extends React.Component {
 
   renderScoresList(listLength, indexesSkipped) {
     return (
-      <div className="scores-displaying">
+      <div id="scoreboard-list" className="scores-displaying">
         <div className="row justify-content-center">
           <div className="scores-displaying-single-element">
             {[...Array(listLength)].map((x, i) => {
-              return <div key={i + indexesSkipped}>{i + indexesSkipped + 1}. </div>;
+              return <div className="unique-scores-displaying-single-element"  key={i + indexesSkipped}>{i + indexesSkipped + 1}. </div>;
             })}
           </div>
           <div className="scores-displaying-single-element">

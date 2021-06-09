@@ -100,7 +100,6 @@ class GameTimer extends React.Component {
   gameReset = (puzzleSolved) => {
     this.generateWord();
     this.videoId = 'wTm-WFM0v-g';
-
     if (!puzzleSolved) {
       this.score = 0;
       this.resetCounter();
@@ -193,29 +192,29 @@ class GameTimer extends React.Component {
       <div>
         <div className="game open-animation">
           <div className="header mt-4 mb-4">
-            <h3>
+            <h3 id="game-description">
               {this.state.languageVersion.description}
             </h3>
-            <h1 className="displayed-word">
+            <h1 id="displayed-word" className="displayed-word">
               {this.displayedWord}
             </h1>
             <div className="mb-3">
-              <img className="game-state-image" src={require('./../../assets/hangman' + this.changingImageLogic() + '.png')} alt="test"></img>
+              <img id="hangman-image" className="game-state-image" src={require('./../../assets/hangman' + this.changingImageLogic() + '.png')} alt="test"></img>
             </div>
           </div>
           <div>
             <div className="row justify-content-center">
               <div className="col-md-7 col-sm-12">
-                <div className="header">
+                <div id="pick-letter-description" className="header">
                   {this.state.languageVersion.pickLetterDescription} <br /> </div>
                 {
                   this.state.languageVersion.lettersToPick.map((letter, index) => {
-                    return <button className={"keyboard-button " + (this.timeGlobal === 0 ? "keyboard-button-highlight-disabled " : "")} disabled={this.timeGlobal === 0} key={letter} onClick={() => { this.pickLetter(letter, index) }}>{letter}</button>
+                    return <button id="keyboard-letter-button" className={"keyboard-button " + (this.timeGlobal === 0 ? "keyboard-button-highlight-disabled " : "")} disabled={this.timeGlobal === 0} key={letter} onClick={() => { this.pickLetter(letter, index) }}>{letter}</button>
                   })
                 }
               </div>
               <div className="col-md-5 col-sm-12">
-                <div className="header">{this.state.languageVersion.usedLettersDescription} <br /></div>
+                <div id="used-letters-header" className="header">{this.state.languageVersion.usedLettersDescription} <br /></div>
                 <div className="row justify-content-center">
                   {
                     this.state.languageVersion.usedLetters.map((letter) => {
@@ -223,7 +222,7 @@ class GameTimer extends React.Component {
                     })
                   }
                 </div>
-                <div className="game-timer">
+                <div id="game-timer-header-and-value" className="game-timer">
                   {this.state.languageVersion.timeRemained + ' ' + this.timeGlobal}
                 </div>
                 <div>
@@ -232,9 +231,9 @@ class GameTimer extends React.Component {
               </div>
             </div>
             <div className="row justify-content-center mt-4">
-              <button className="button-start-reset" onClick={() => { this.gameReset(this.puzzleDiscovered) }}>{this.puzzleDiscovered ? this.state.languageVersion.randomNewWordDescription : 'Reset'}</button>
-              <button className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>{this.state.languageVersion.scoreboard?.scoreboardButton}</button>
-              <button className={"button-start-reset " + (this.timeGlobal === 0 ? "keyboard-button-highlight-disabled " : "")} disabled={this.timeGlobal === 0} onClick={() => { this.finishTimeGame(true) }}>{this.state.languageVersion.endgameDescription}</button>
+              <button id="game-reset-button" className="button-start-reset" onClick={() => { this.gameReset(this.puzzleDiscovered) }}>{this.puzzleDiscovered ? this.state.languageVersion.randomNewWordDescription : 'Reset'}</button>
+              <button id="scoreboard-button" className="button-start-reset" onClick={() => { this.scoreboardDisplay() }}>{this.state.languageVersion.scoreboard?.scoreboardButton}</button>
+              <button id="finish-game-button" className={"button-start-reset " + (this.timeGlobal === 0 ? "keyboard-button-highlight-disabled " : "")} disabled={this.timeGlobal === 0} onClick={() => { this.finishTimeGame(true) }}>{this.state.languageVersion.endgameDescription}</button>
             </div>
           </div>
           <YouTube videoId={this.videoId} opts={opts} onReady={this._onReady} />

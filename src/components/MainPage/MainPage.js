@@ -15,8 +15,8 @@ class MainPage extends React.Component {
 
   render() {
     return (<div className={'welcome-screen ' + (this.state.enterAnimation ? "enter-game-animation " : "open-animation ")}>
-    <div className="title enter-game-animation-top row justify-content-center">Hangman 2077</div>
-    <img src={require('./../../assets/hangman_home_page.gif')} className="hangman-gif row justify-content-center" alt="test"></img>
+    <div id="home-page-title" className="title enter-game-animation-top row justify-content-center">Hangman 2077</div>
+    <img id="home-page-gif" src={require('./../../assets/hangman_home_page.gif')} className="hangman-gif row justify-content-center" alt="test"></img>
     </div>);
   }
 }
